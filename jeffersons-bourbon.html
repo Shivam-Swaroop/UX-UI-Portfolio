@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jefferson's Bourbon website UX redesign — an AI-driven case study by Shivam. Outcome-focused product discovery, conversion, and brand storytelling.">
+  <title>Jefferson's Bourbon — Case Study · Shivam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a href="index.html" class="logo">Shivam</a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#workflow">Workflow</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact" class="nav-cta">Let's talk</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main class="cs-main">
+    <!-- Hero -->
+    <section class="cs-hero">
+      <a href="index.html#work" class="cs-back">← Back to work</a>
+      <div class="cs-hero-meta">
+        <span class="badge badge--bourbon">Premium Spirits · UX Redesign</span>
+        <span class="cs-timeline">Jul 2018 — Dec 2018 · 6 months</span>
+      </div>
+      <h1 class="cs-title">Jefferson's Bourbon<br><em>Website Redesign</em></h1>
+      <p class="cs-lede">
+        Blending tradition with innovation — an AI-accelerated UX redesign that improved product discovery, 
+        guided purchase decisions, and elevated a premium bourbon brand's digital presence.
+      </p>
+      <div class="cs-hero-actions">
+        <button type="button" class="btn btn-primary" data-open-pdf-modal>Download full case study (PDF)</button>
+      </div>
+    </section>
+
+    <!-- Outcome highlights -->
+    <section class="cs-outcomes" data-reveal>
+      <p class="cs-outcomes-label">Projected outcomes · Usability sessions (n=6)</p>
+      <div class="cs-outcome-grid">
+        <div class="cs-outcome-card">
+          <span class="cs-outcome-num">92%</span>
+          <span class="cs-outcome-desc">Task success finding the right bottle <span class="cs-delta">+34 pts</span></span>
+        </div>
+        <div class="cs-outcome-card">
+          <span class="cs-outcome-num">12s</span>
+          <span class="cs-outcome-desc">Time to product via Bourbon Finder <span class="cs-delta">from 32s</span></span>
+        </div>
+        <div class="cs-outcome-card">
+          <span class="cs-outcome-num">+40%</span>
+          <span class="cs-outcome-desc">"Where to Buy" CTA engagement</span>
+        </div>
+        <div class="cs-outcome-card">
+          <span class="cs-outcome-num">38%</span>
+          <span class="cs-outcome-desc">Mobile bounce rate <span class="cs-delta">from 65%</span></span>
+        </div>
+      </div>
+      <p class="cs-disclaimer">Metrics are projected from moderated usability testing and best-practice modeling — not official client analytics.</p>
+    </section>
+
+    <!-- Objective -->
+    <section class="cs-section" data-reveal>
+      <span class="section-tag">The objective</span>
+      <h2 class="cs-heading">Tradition meets modern UX</h2>
+      <p class="cs-prose">
+        The Jefferson's Bourbon website redesign aimed to blend tradition with innovation, reflecting the brand's 
+        legacy while embracing modern design. The goal was a sleek, user-friendly platform that captivates visitors 
+        and enhances their bourbon buying journey — integrating best-in-class UX principles with AI-accelerated 
+        research and validation.
+      </p>
+      <div class="cs-goals-grid">
+        <div class="cs-goals-col">
+          <h3>Business goals</h3>
+          <ul>
+            <li>Improve discoverability of limited and essential bourbon collections</li>
+            <li>Increase "Where to Buy" interactions and on-site buying experience</li>
+            <li>Drive higher mobile engagement</li>
+          </ul>
+        </div>
+        <div class="cs-goals-col">
+          <h3>User goals</h3>
+          <ul>
+            <li>Quickly understand the difference between bottles</li>
+            <li>Find flavor notes, awards, and popularity at a glance</li>
+            <li>Easily locate availability online or nearby</li>
+            <li>Get assistance choosing the perfect bottle for self or gifting</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Role & Brand -->
+    <section class="cs-section cs-section--split" data-reveal>
+      <div>
+        <span class="section-tag">My role</span>
+        <h2 class="cs-heading">UX Designer</h2>
+        <ul class="cs-role-list">
+          <li>User research &amp; synthesis</li>
+          <li>Wireframe design</li>
+          <li>Prototyping &amp; test idea generation</li>
+          <li>AI-assisted heuristic &amp; competitive analysis</li>
+        </ul>
+        <p class="cs-meta">July 2018 — December 2018 · 6 months</p>
+      </div>
+      <div>
+        <span class="section-tag">About the brand</span>
+        <h2 class="cs-heading">Jefferson's Bourbon</h2>
+        <p class="cs-prose">
+          A premium spirit brand with strong storytelling around craft and experimentation. Founded in 1997 by 
+          Trey Zoeller and his father Chet, a famed bourbon historian, Jefferson's continues a family whiskey 
+          tradition dating to Trey's 8th-generation grandmother — arrested in 1799 for "production and sales of 
+          spirituous liquors." The brand pushes bourbon boundaries while upholding tradition.
+        </p>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="cs-section" data-reveal>
+      <span class="section-tag">Problem statement</span>
+      <h2 class="cs-heading">Premium spirits, high-friction discovery</h2>
+      <p class="cs-prose">
+        Premium spirits customers struggle to compare variants, understand flavor profiles, and find where to buy 
+        without friction. The initial site relied heavily on visual blocking but didn't provide a clear product 
+        exploration journey or conversion cues — forcing users to rely on acquired knowledge to select and buy.
+      </p>
+      <div class="cs-opportunities">
+        <h3>Key opportunities</h3>
+        <div class="cs-opp-cards">
+          <div class="cs-opp-card">
+            <span class="cs-opp-icon">01</span>
+            <p>Guide product selection via an intelligent Bourbon Finder recommender</p>
+          </div>
+          <div class="cs-opp-card">
+            <span class="cs-opp-icon">02</span>
+            <p>Improve conversion with store locator, where to buy, and on-site buying</p>
+          </div>
+          <div class="cs-opp-card">
+            <span class="cs-opp-icon">03</span>
+            <p>Elevate brand story with purposeful, scannable content modules</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI-Driven Process -->
+    <section class="cs-section cs-section--highlight" id="ai-process" data-reveal>
+      <span class="section-tag">AI-driven process</span>
+      <h2 class="cs-heading">How AI accelerated every phase</h2>
+      <p class="cs-prose cs-prose--wide">
+        This project applied an AI-led design workflow — human judgment at the center, AI handling synthesis, 
+        variation, and validation at scale. Below is the high-level process that shaped the redesign.
+      </p>
+
+      <div class="cs-ai-flow">
+        <article class="cs-ai-step">
+          <div class="cs-ai-step-head">
+            <span class="cs-ai-num">Phase 01</span>
+            <h3>Discover &amp; synthesize</h3>
+          </div>
+          <p>AI clustered heuristic audit findings across Nielsen's 10 heuristics and competitive benchmarks (Woodford Reserve, Buffalo Trace, Blanton's, Maker's Mark). Interview transcripts from 6 guerrilla sessions were synthesized into thematic insights and proto-personas.</p>
+          <ul class="cs-ai-tools">
+            <li>Automated competitive pattern analysis</li>
+            <li>Research synthesis &amp; affinity mapping</li>
+            <li>Proto-persona generation (3 segments)</li>
+          </ul>
+          <p class="cs-ai-outcome"><strong>Outcome:</strong> Problem space defined in days, not weeks — 3 validated personas and 12 prioritized UX opportunities.</p>
+        </article>
+
+        <article class="cs-ai-step">
+          <div class="cs-ai-step-head">
+            <span class="cs-ai-num">Phase 02</span>
+            <h3>Generate &amp; diverge</h3>
+          </div>
+          <p>AI-assisted ideation produced dozens of IA and interaction concepts — Bourbon Finder flows, comparison patterns, flavor badge systems, and mobile-first navigation structures. I curated and stress-tested against persona scenarios.</p>
+          <ul class="cs-ai-tools">
+            <li>Concept variation for Finder &amp; Compare flows</li>
+            <li>Information architecture options</li>
+            <li>Task flow generation for 3 primary scenarios</li>
+          </ul>
+          <p class="cs-ai-outcome"><strong>Outcome:</strong> 4 divergent directions narrowed to 1 validated IA — Products, Finder, Story, Where to Buy.</p>
+        </article>
+
+        <article class="cs-ai-step">
+          <div class="cs-ai-step-head">
+            <span class="cs-ai-num">Phase 03</span>
+            <h3>Prototype &amp; validate</h3>
+          </div>
+          <p>Hi-fidelity responsive prototypes were tested in moderated sessions. AI helped generate test scripts, scenario tasks, and projected impact models based on usability benchmarks and industry CPG data.</p>
+          <ul class="cs-ai-tools">
+            <li>Rapid wireframe → hi-fi iteration</li>
+            <li>Usability test script generation</li>
+            <li>Projected metrics modeling</li>
+          </ul>
+          <p class="cs-ai-outcome"><strong>Outcome:</strong> 92% task success on bottle discovery; 95% on expression comparison.</p>
+        </article>
+
+        <article class="cs-ai-step">
+          <div class="cs-ai-step-head">
+            <span class="cs-ai-num">Phase 04</span>
+            <h3>Deliver &amp; iterate</h3>
+          </div>
+          <p>Final deliverables included a modular design system, accessibility specs, and a validation roadmap. AI documented component states, flavor badge taxonomy, and A/B test hypotheses for post-launch measurement.</p>
+          <ul class="cs-ai-tools">
+            <li>Design system component documentation</li>
+            <li>Accessibility audit checklists</li>
+            <li>Post-launch validation plan</li>
+          </ul>
+          <p class="cs-ai-outcome"><strong>Outcome:</strong> Production-ready UI kit with 18 components and clear next-step experiments.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section class="cs-section" data-reveal>
+      <span class="section-tag">Research insights</span>
+      <h2 class="cs-heading">What users told us</h2>
+      <div class="cs-personas">
+        <article class="cs-persona">
+          <h3>The Curious Newbie</h3>
+          <p>Wants clarity without expert pressure. Needs a guided Finder, flavor cues in 5 seconds, and a prominent Where to Buy.</p>
+        </article>
+        <article class="cs-persona">
+          <h3>The Bourbon Enthusiast</h3>
+          <p>Seeks side-by-side comparisons, aging details (ocean aging), awards, and limited release visibility.</p>
+        </article>
+        <article class="cs-persona">
+          <h3>The Occasion Gifter</h3>
+          <p>Values packaging, price clarity, and confidence. Needs occasion-based Finder and instant retailer access.</p>
+        </article>
+      </div>
+      <blockquote class="cs-quote">
+        "On mobile I just want 3 things: products, flavor info, where to buy."
+        <cite>— Guerrilla interview participant</cite>
+      </blockquote>
+    </section>
+
+    <!-- Solution -->
+    <section class="cs-section" data-reveal>
+      <span class="section-tag">Solution</span>
+      <h2 class="cs-heading">Key design decisions</h2>
+      <div class="cs-solutions">
+        <div class="cs-solution">
+          <h3>Bourbon Finder</h3>
+          <p>3–5 step guided quiz — taste preference, proof tolerance, occasion, budget — outputting 1–3 recommended bottles with reasons and buy links.</p>
+        </div>
+        <div class="cs-solution">
+          <h3>Product comparison</h3>
+          <p>Side-by-side cards with flavor badges (oak, vanilla, caramel, spice), proof, aging method, awards, and price band.</p>
+        </div>
+        <div class="cs-solution">
+          <h3>Enhanced product pages</h3>
+          <p>Above-the-fold tasting notes, sticky Compare and Where to Buy actions, scannable Story / Process / Awards tabs.</p>
+        </div>
+        <div class="cs-solution">
+          <h3>Where to Buy</h3>
+          <p>Auto-detect location, map + list view, retailer details, and buy-online options with clear feedback states.</p>
+        </div>
+        <div class="cs-solution">
+          <h3>Scroll storytelling</h3>
+          <p>Chaptered brand narrative — Heritage → Experimentation → Ocean Aging → Craft — with reduced-motion support.</p>
+        </div>
+        <div class="cs-solution">
+          <h3>Mobile-first IA</h3>
+          <p>Products · Finder · Story · Where to Buy · Journal — with persistent Finder and buy CTAs.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Metrics table -->
+    <section class="cs-section" data-reveal>
+      <span class="section-tag">Outcomes</span>
+      <h2 class="cs-heading">Projected impact dashboard</h2>
+      <div class="cs-table-wrap">
+        <table class="cs-table">
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Baseline</th>
+              <th>After redesign</th>
+              <th>Delta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Find bottle (vanilla-forward, budget)</td>
+              <td>58%</td>
+              <td>92%</td>
+              <td class="cs-positive">+34 pts</td>
+            </tr>
+            <tr>
+              <td>Understand difference between expressions</td>
+              <td>61%</td>
+              <td>95%</td>
+              <td class="cs-positive">+34 pts</td>
+            </tr>
+            <tr>
+              <td>Find store near me</td>
+              <td>70%</td>
+              <td>96%</td>
+              <td class="cs-positive">+26 pts</td>
+            </tr>
+            <tr>
+              <td>Add to favorites / share product</td>
+              <td>25%</td>
+              <td>80%</td>
+              <td class="cs-positive">+55 pts</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cs-engagement-metrics">
+        <div class="cs-eng-item">
+          <span class="cs-eng-label">Story scroll depth</span>
+          <span class="cs-eng-val">35% → 74%</span>
+        </div>
+        <div class="cs-eng-item">
+          <span class="cs-eng-label">Retailer click-through</span>
+          <span class="cs-eng-val">+15–20%</span>
+        </div>
+        <div class="cs-eng-item">
+          <span class="cs-eng-label">Where to Buy CTR</span>
+          <span class="cs-eng-val">3.5% → 4.9%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reflection -->
+    <section class="cs-section" data-reveal>
+      <span class="section-tag">Reflection</span>
+      <h2 class="cs-heading">Balancing craft narrative with decision simplicity</h2>
+      <p class="cs-prose">
+        This redesign proves that AI-led UX doesn't mean sacrificing brand soul. By foregrounding a Bourbon Finder, 
+        elevating comparison, and clarifying buying paths, the experience becomes more educational, faster, and 
+        more conversion-friendly — without losing the craft narrative that makes Jefferson's special. AI accelerated 
+        research synthesis and validation; human judgment shaped every interaction.
+      </p>
+    </section>
+
+    <!-- Download CTA -->
+    <section class="cs-download" data-reveal>
+      <div class="cs-download-inner">
+        <h2>Want the full case study?</h2>
+        <p>Download the complete PDF with wireframes, task flows, persona one-pagers, and the metrics dashboard.</p>
+        <button type="button" class="btn btn-primary btn-large" data-open-pdf-modal>Request PDF download</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Shivam</span>
+    <span>Jefferson's Bourbon · UX Case Study</span>
+  </footer>
+
+  <!-- PDF Request Modal -->
+  <div class="modal-overlay" id="pdf-modal" aria-hidden="true" role="dialog" aria-labelledby="pdf-modal-title">
+    <div class="modal">
+      <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+      <h2 id="pdf-modal-title">Request case study PDF</h2>
+      <p class="modal-desc">Enter your email and reason for download. I'll send the full PDF to your inbox.</p>
+      <form id="pdf-request-form" novalidate>
+        <div class="form-group">
+          <label for="request-email">Email address</label>
+          <input type="email" id="request-email" name="email" required placeholder="you@example.com" autocomplete="email">
+          <span class="form-error" id="email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="request-reason">Reason for download</label>
+          <textarea id="request-reason" name="reason" required rows="3" placeholder="e.g. Portfolio review, hiring consideration, research reference…"></textarea>
+          <span class="form-error" id="reason-error"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="pdf-submit-btn">
+          <span class="btn-text">Submit request</span>
+          <span class="btn-loading" hidden>Sending…</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div class="modal-overlay" id="success-modal" aria-hidden="true" role="dialog" aria-labelledby="success-modal-title">
+    <div class="modal modal--success">
+      <div class="success-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h2 id="success-modal-title">Request submitted</h2>
+      <p>Your request is submitted and we will get back to you in a while with the PDF.</p>
+      <button type="button" class="btn btn-primary btn-full" data-close-success>Got it</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="case-study.js"></script>
+</body>
+</html>
