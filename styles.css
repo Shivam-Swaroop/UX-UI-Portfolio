@@ -256,8 +256,8 @@ body:hover .cursor-glow {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   padding-left: 0.1em;
-  padding-right: 0.15em;
-  margin-right: -0.15em;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
 }
 
 .hero-lede {
