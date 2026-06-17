@@ -65,7 +65,7 @@ img { max-width: 100%; display: block; }
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--accent-glow) 10%, transparent 70%);
   pointer-events: none;
   z-index: 0;
   transform: translate(-50%, -50%);
@@ -242,7 +242,7 @@ body:hover .cursor-glow {
 .hero-title .line {
   display: block;
   opacity: 0;
-  animation: fadeUp 0.8s forwards;
+  animation: fadeUp 0.9s forwards;
 }
 
 .hero-title .line:nth-child(1) { animation-delay: 0.2s; }
@@ -255,6 +255,9 @@ body:hover .cursor-glow {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  padding-left: 0.1em;
+  padding-right: 0.15em;
+  margin-right: -0.15em;
 }
 
 .hero-lede {
