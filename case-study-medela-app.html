@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medela Pump &amp; Care — App Redesign Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d12;
+    --surface: #161620;
+    --surface2: #1d1d2a;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #f1f0f6;
+    --muted: #84838f;
+    --muted2: #b7b6c2;
+    --lav: #b9a8f0;
+    --lav-bright: #cdb8ff;
+    --lav-dim: rgba(185,168,240,0.1);
+    --mint: #8fd9c4;
+    --mint-bright: #a8e6cf;
+    --peach: #f3c6a5;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Inter', sans-serif; font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  section, header, footer { padding: 6rem 3rem; }
+  .inner { max-width: 1100px; margin: 0 auto; }
+
+  /* TOP BAR */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 3rem; background: rgba(13,13,18,0.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted2); text-decoration: none; transition: color .2s;
+  }
+  .back-link:hover { color: var(--lav-bright); }
+  .topbar-tag {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative; padding-top: 5rem; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 0%, rgba(185,168,240,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 100%, rgba(143,217,196,0.08) 0%, transparent 60%);
+  }
+  .hero-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .pill {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    border: 1px solid var(--border2); color: var(--muted2);
+    padding: 0.45rem 0.9rem; border-radius: 999px;
+  }
+  .pill.lav { color: var(--lav-bright); border-color: rgba(185,168,240,0.35); background: var(--lav-dim); }
+  .hero-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    line-height: 1.02; letter-spacing: -0.03em; max-width: 920px;
+  }
+  .hero-title em { font-style: italic; color: var(--lav-bright); font-weight: 600; }
+  .hero-sub {
+    font-size: 1rem; line-height: 1.85; color: var(--muted2);
+    max-width: 620px; margin-top: 1.8rem;
+  }
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    margin-top: 4rem; border: 1px solid var(--border); background: var(--border);
+  }
+  .hero-meta div { background: var(--bg); padding: 1.5rem 1.6rem; }
+  .meta-label {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .meta-val { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; line-height: 1.4; }
+
+  .hero-visual {
+    margin-top: 4rem; display: flex; justify-content: center;
+    padding: 3rem 0 1rem;
+  }
+
+  /* SECTION HEADERS */
+  .eyebrow {
+    font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--lav-bright);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--lav-bright); }
+  h2.s-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.9rem, 3.5vw, 3rem); letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .lede {
+    font-size: 0.95rem; line-height: 1.85; color: var(--muted2);
+    max-width: 700px; margin-top: 1.2rem;
+  }
+
+  /* GOALS */
+  .goals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); }
+  .goals-col { background: var(--surface); padding: 2.2rem; }
+  .goals-col h3 {
+    font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .goals-col h3 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--lav-bright); }
+  .goals-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+  .goals-col li {
+    font-size: 0.85rem; line-height: 1.7; color: var(--muted2);
+    padding-left: 1.2rem; position: relative;
+  }
+  .goals-col li::before {
+    content: ''; position: absolute; left: 0; top: 0.55em; width: 6px; height: 1px; background: var(--lav-bright);
+  }
+
+  /* BRAND SECTION */
+  .brand-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .brand-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; margin-top: 2.5rem; }
+  .brand-text { font-size: 0.92rem; line-height: 1.95; color: var(--muted2); }
+  .brand-text strong { color: var(--text); font-weight: 600; }
+  .brand-quote {
+    font-family: 'Syne', sans-serif; font-style: italic; font-weight: 500;
+    font-size: 1.3rem; line-height: 1.6; color: var(--mint-bright);
+    border-left: 2px solid var(--mint-bright); padding-left: 1.5rem; margin-top: 1.5rem;
+  }
+
+  /* PROBLEM */
+  .problem-card {
+    margin-top: 2.5rem; border: 1px solid var(--border2); border-radius: 12px;
+    padding: 2.5rem; background: linear-gradient(135deg, var(--lav-dim), transparent 60%);
+  }
+  .problem-card p { font-size: 0.95rem; line-height: 1.9; color: var(--muted2); }
+  .opp-list { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem; margin-top: 2.5rem; }
+  .opp-item {
+    border: 1px solid var(--border); border-radius: 10px; padding: 1.6rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .opp-item:hover { border-color: var(--lav); transform: translateY(-3px); }
+  .opp-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem; color: var(--lav-bright); margin-bottom: 0.8rem; }
+  .opp-item p { font-size: 0.82rem; line-height: 1.7; color: var(--muted2); }
+
+  /* PROCESS TIMELINE */
+  .process-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .process-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); }
+  .process-cell { background: var(--surface); padding: 2rem; position: relative; }
+  .process-cell .step-num {
+    font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
+    color: transparent; -webkit-text-stroke: 1px var(--border2);
+    line-height: 1; margin-bottom: 1.2rem;
+  }
+  .process-cell h4 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.7rem; }
+  .process-cell p { font-size: 0.78rem; line-height: 1.7; color: var(--muted); }
+
+  .findings { margin-top: 3rem; }
+  .findings h4 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1.2rem; }
+  .heuristic-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.8rem; }
+  .heuristic { display: flex; gap: 0.9rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .heuristic .icon {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 800; color: var(--lav-bright);
+  }
+  .heuristic p { font-size: 0.8rem; line-height: 1.7; color: var(--muted2); }
+  .heuristic strong { color: var(--text); }
+
+  .quote-strip { margin-top: 3rem; display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .quote-cell { background: var(--bg); padding: 1.6rem 1.8rem; }
+  .quote-cell p {
+    font-family: 'Syne', sans-serif; font-style: italic; font-weight: 500; font-size: 0.95rem;
+    line-height: 1.6; color: var(--muted2);
+  }
+  .quote-cell p::before { content: '\201C'; color: var(--lav-bright); }
+  .quote-cell p::after { content: '\201D'; color: var(--lav-bright); }
+
+  /* PERSONAS */
+  .persona-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 3rem; }
+  .persona-card {
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .persona-card:hover { border-color: var(--lav); transform: translateY(-4px); }
+  .persona-head {
+    padding: 1.8rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .persona-avatar {
+    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+    background: var(--lav-dim); color: var(--lav-bright);
+    border: 1px solid rgba(185,168,240,0.3);
+  }
+  .persona-head h4 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .persona-head span { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 0.2rem; }
+  .persona-body { padding: 1.6rem 1.8rem 1.8rem; }
+  .persona-body h5 {
+    font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lav-bright);
+    margin-bottom: 0.7rem; margin-top: 1.2rem;
+  }
+  .persona-body h5:first-child { margin-top: 0; }
+  .persona-body ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .persona-body li { font-size: 0.8rem; line-height: 1.6; color: var(--muted2); padding-left: 1rem; position: relative; }
+  .persona-body li::before { content: '–'; position: absolute; left: 0; color: var(--muted); }
+
+  /* SOLUTIONS / SCREENS */
+  .solutions-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .screen-row { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 3rem; align-items: center; margin-top: 4rem; }
+  .screen-row:first-of-type { margin-top: 3rem; }
+  .screen-row.reverse { direction: rtl; }
+  .screen-row.reverse > * { direction: ltr; }
+  .screen-mock {
+    border: 1px solid var(--border2); border-radius: 28px; overflow: hidden;
+    background: var(--bg); aspect-ratio: 9/16; max-width: 280px; margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .screen-text .tag-mini {
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lav-bright); margin-bottom: 0.8rem;
+  }
+  .screen-text h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; letter-spacing: -0.01em; }
+  .screen-text p { font-size: 0.85rem; line-height: 1.85; color: var(--muted2); }
+
+  /* phone chrome */
+  .phone-screen { display: flex; flex-direction: column; height: 100%; padding: 1.2rem; gap: 1rem; }
+  .phone-status { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--muted); }
+  .phone-greeting { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; }
+  .phone-sub { font-size: 0.7rem; color: var(--muted); margin-top: -0.4rem; }
+
+  /* MOCK: Quick Log */
+  .quicklog-cards { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 0.5rem; }
+  .qcard {
+    border: 1px solid var(--border2); border-radius: 14px; padding: 1rem 1.1rem;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .qcard .left { display: flex; align-items: center; gap: 0.8rem; }
+  .qcard .ic {
+    width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+  }
+  .ic.feed { background: rgba(185,168,240,0.18); color: var(--lav-bright); }
+  .ic.pump { background: rgba(143,217,196,0.18); color: var(--mint-bright); }
+  .ic.diaper { background: rgba(243,198,165,0.18); color: var(--peach); }
+  .qcard .label { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 700; }
+  .qcard .time { font-size: 0.65rem; color: var(--muted); }
+  .qcard .tap {
+    font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--bg); background: var(--lav-bright); padding: 0.35rem 0.7rem; border-radius: 999px;
+  }
+  .undo-toast {
+    margin-top: auto; border: 1px solid var(--border2); border-radius: 12px;
+    padding: 0.8rem 1rem; display: flex; justify-content: space-between; align-items: center;
+    background: var(--surface2); font-size: 0.7rem;
+  }
+  .undo-toast .ut-label { color: var(--muted2); }
+  .undo-toast .ut-action { color: var(--lav-bright); font-weight: 700; font-family: 'Syne', sans-serif; }
+
+  /* MOCK: sync status */
+  .sync-pill {
+    display: flex; align-items: center; gap: 0.6rem; border: 1px solid var(--border2);
+    border-radius: 999px; padding: 0.6rem 1rem; font-size: 0.7rem; color: var(--muted2);
+  }
+  .sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mint-bright); flex-shrink: 0; }
+  .sync-dot.warn { background: var(--peach); }
+  .pump-graphic {
+    margin-top: 0.5rem; border: 1px solid var(--border2); border-radius: 16px; padding: 1.5rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    background: radial-gradient(circle at 50% 30%, rgba(185,168,240,0.12), transparent 70%);
+  }
+  .pump-ring {
+    width: 90px; height: 90px; border-radius: 50%; border: 6px solid var(--surface2);
+    border-top-color: var(--lav-bright); display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+  }
+  .pump-graphic .pg-label { font-size: 0.7rem; color: var(--muted); text-align: center; }
+  .recover-steps { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+  .recover-step { display: flex; gap: 0.6rem; align-items: center; font-size: 0.7rem; color: var(--muted2); }
+  .recover-step .rn {
+    width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--border2);
+    display: flex; align-items: center; justify-content: center; font-size: 0.6rem; flex-shrink: 0;
+    font-family: 'Syne', sans-serif; font-weight: 700; color: var(--lav-bright);
+  }
+
+  /* MOCK: insights */
+  .insight-card { border: 1px solid var(--border2); border-radius: 14px; padding: 1.1rem; }
+  .insight-card .ih { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--muted); margin-bottom: 0.8rem; }
+  .insight-card .ih strong { color: var(--text); font-family: 'Syne', sans-serif; }
+  .trend-chart { height: 90px; position: relative; }
+  .trend-band {
+    position: absolute; left: 0; right: 0; top: 30%; height: 40%;
+    background: rgba(143,217,196,0.15); border-radius: 6px;
+  }
+  .trend-line {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 100%;
+  }
+  .insight-tag {
+    margin-top: 0.8rem; font-size: 0.68rem; color: var(--mint-bright);
+    background: rgba(143,217,196,0.1); border: 1px solid rgba(143,217,196,0.25);
+    border-radius: 8px; padding: 0.6rem 0.8rem; line-height: 1.5;
+  }
+
+  /* MOCK: care circle */
+  .care-row { display: flex; align-items: center; gap: -8px; margin-bottom: 0.3rem; }
+  .care-avatars { display: flex; }
+  .care-avatar {
+    width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.7rem; margin-left: -8px;
+  }
+  .care-avatar:first-child { margin-left: 0; }
+  .care-avatar.a1 { background: var(--lav-dim); color: var(--lav-bright); }
+  .care-avatar.a2 { background: rgba(143,217,196,0.18); color: var(--mint-bright); }
+  .care-feed { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+  .care-item {
+    display: flex; gap: 0.7rem; align-items: flex-start; font-size: 0.72rem; color: var(--muted2);
+    border-bottom: 1px solid var(--border); padding-bottom: 0.6rem;
+  }
+  .care-item .ca {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.6rem;
+  }
+  .care-item .ca.a1 { background: var(--lav-dim); color: var(--lav-bright); }
+  .care-item .ca.a2 { background: rgba(143,217,196,0.18); color: var(--mint-bright); }
+  .care-item b { color: var(--text); }
+
+  /* IMPACT METRICS */
+  .impact-note { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-top: 1rem; max-width: 650px; line-height: 1.7; }
+  .impact-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); }
+  .impact-stat { background: var(--surface); padding: 2rem 1.6rem; }
+  .impact-stat .label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .impact-stat .vals { display: flex; align-items: baseline; gap: 0.6rem; }
+  .impact-stat .from { font-size: 1rem; color: var(--muted); text-decoration: line-through; }
+  .impact-stat .to { font-family: 'Syne', sans-serif; font-size: 2.1rem; font-weight: 800; color: var(--mint-bright); }
+  .impact-stat .arrow { color: var(--muted); font-size: 0.9rem; }
+
+  .chart-wrap { margin-top: 3rem; border: 1px solid var(--border); border-radius: 12px; padding: 2rem; background: var(--surface); }
+  .chart-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .chart-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 2rem; }
+  .bar-row { display: grid; grid-template-columns: 240px 1fr 110px; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-label { font-size: 0.78rem; color: var(--muted2); }
+  .bar-track { height: 22px; background: var(--surface2); border-radius: 4px; position: relative; overflow: hidden; }
+  .bar-fill-base { position: absolute; top: 0; left: 0; bottom: 0; background: var(--border2); border-radius: 4px; }
+  .bar-fill {
+    position: absolute; top: 0; left: 0; bottom: 0; border-radius: 4px;
+    background: linear-gradient(90deg, var(--lav), var(--mint));
+    width: 0; transition: width 1.4s cubic-bezier(.22,.61,.36,1);
+  }
+  .bar-vals { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; text-align: right; white-space: nowrap; }
+  .bar-vals .old { color: var(--muted); font-weight: 400; text-decoration: line-through; margin-right: 0.4rem; }
+  .bar-vals .new { color: var(--mint-bright); }
+  .bar-vals .new.alt { color: var(--lav-bright); }
+  .legend { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; font-size: 0.7rem; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  /* REFLECTION */
+  .reflection-section { background: var(--surface); border-top: 1px solid var(--border); }
+  .reflection-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; margin-top: 2.5rem; align-items: start; }
+  .reflection-text p { font-size: 0.95rem; line-height: 1.95; color: var(--muted2); }
+  .reflection-text p + p { margin-top: 1rem; }
+  .next-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .next-item { background: var(--bg); padding: 1.1rem 1.3rem; font-size: 0.8rem; color: var(--muted2); display: flex; gap: 0.8rem; }
+  .next-item .ni { color: var(--lav-bright); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem; }
+
+  /* CTA / PDF LINK */
+  .cta-section {
+    text-align: center; border-top: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 100%, rgba(185,168,240,0.14) 0%, transparent 60%);
+  }
+  .cta-section .eyebrow { justify-content: center; }
+  .cta-section .eyebrow::before { display: none; }
+  .cta-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.5rem); letter-spacing: -0.02em; line-height: 1.1;
+    max-width: 700px; margin: 0 auto;
+  }
+  .cta-sub { font-size: 0.9rem; color: var(--muted2); max-width: 500px; margin: 1.2rem auto 0; line-height: 1.8; }
+  .pdf-card {
+    margin: 2.8rem auto 0; max-width: 420px;
+    border: 1px solid var(--border2); border-radius: 12px;
+    padding: 1.6rem 1.8rem; display: flex; align-items: center; gap: 1.2rem;
+    text-decoration: none; transition: border-color .2s, transform .2s, background .2s;
+    background: var(--surface);
+  }
+  .pdf-card:hover { border-color: var(--lav); transform: translateY(-3px); background: var(--surface2); }
+  .pdf-icon {
+    width: 46px; height: 46px; flex-shrink: 0; border-radius: 8px;
+    background: var(--lav-dim); border: 1px solid rgba(185,168,240,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--lav-bright); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.7rem;
+  }
+  .pdf-info { text-align: left; flex: 1; }
+  .pdf-info h4 { font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700; }
+  .pdf-info span { font-size: 0.7rem; color: var(--muted); }
+  .pdf-arrow { color: var(--lav-bright); font-size: 1.1rem; }
+
+  /* FOOTER */
+  footer.page-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border); padding: 2rem 3rem;
+  }
+  footer.page-footer span { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); }
+
+  @media (max-width: 900px) {
+    section, header, footer { padding: 4rem 1.5rem; }
+    .topbar { padding: 1rem 1.5rem; }
+    .hero-meta { grid-template-columns: 1fr 1fr; }
+    .goals-grid, .brand-grid, .quote-strip, .reflection-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .opp-list { grid-template-columns: 1fr; }
+    .process-row { grid-template-columns: 1fr 1fr; }
+    .heuristic-grid { grid-template-columns: 1fr; }
+    .persona-grid { grid-template-columns: 1fr; }
+    .screen-row, .screen-row.reverse { grid-template-columns: 1fr; direction: ltr; }
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+    .bar-row { grid-template-columns: 1fr; gap: 0.4rem; text-align: left; }
+    .bar-vals { text-align: left; }
+    footer.page-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="portfolio.html" class="back-link">
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 1L1 5M1 5L5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Back to portfolio
+  </a>
+  <span class="topbar-tag">Case Study 02 / 03</span>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="inner">
+    <div class="hero-tags">
+      <span class="pill lav">Health &amp; Wellness</span>
+      <span class="pill">Mobile App</span>
+      <span class="pill">iOS &amp; Android</span>
+      <span class="pill">2023</span>
+    </div>
+    <h1 class="hero-title">Medela Pump &amp; Care — a calmer companion for <em>one-handed</em> days.</h1>
+    <p class="hero-sub">A self-initiated redesign of Medela's companion app — replacing a cluttered, feature-dense dashboard with a focused daily loop: log a session, glance at status, and trust that everything's connected, all with one hand.</p>
+
+    <div class="hero-meta">
+      <div>
+        <div class="meta-label">Role</div>
+        <div class="meta-val">UX Designer — Research, IA &amp; Prototyping</div>
+      </div>
+      <div>
+        <div class="meta-label">Timeline</div>
+        <div class="meta-val">Jan – Jun 2023 · 6 months</div>
+      </div>
+      <div>
+        <div class="meta-label">Methods</div>
+        <div class="meta-val">Heuristics, Interviews, Journey Maps</div>
+      </div>
+      <div>
+        <div class="meta-label">Focus</div>
+        <div class="meta-val">One-Handed Logging &amp; Calm Insights</div>
+      </div>
+    </div>
+
+    <!-- Hero visual -->
+    <div class="hero-visual">
+      <svg width="640" height="240" viewBox="0 0 640 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a phone showing a quick-log screen beside a gentle supply trend chart">
+        <defs>
+          <linearGradient id="phoneGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#b9a8f0" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="#8fd9c4" stop-opacity="0.06"/>
+          </linearGradient>
+          <linearGradient id="trendGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#b9a8f0"/>
+            <stop offset="100%" stop-color="#8fd9c4"/>
+          </linearGradient>
+        </defs>
+        <!-- phone -->
+        <g transform="translate(60,10)">
+          <rect x="0" y="0" width="160" height="220" rx="22" fill="url(#phoneGrad)" stroke="#b9a8f0" stroke-opacity="0.4" stroke-width="1.5"/>
+          <rect x="14" y="18" width="132" height="184" rx="10" fill="rgba(13,13,18,0.5)" stroke="rgba(255,255,255,0.06)"/>
+          <!-- quick log cards -->
+          <rect x="24" y="32" width="112" height="34" rx="8" fill="rgba(185,168,240,0.14)" stroke="rgba(185,168,240,0.3)"/>
+          <circle cx="40" cy="49" r="8" fill="#b9a8f0" opacity="0.6"/>
+          <text x="56" y="46" fill="#f1f0f6" font-family="Syne" font-size="9" font-weight="700">Feed</text>
+          <text x="56" y="58" fill="#84838f" font-family="Inter" font-size="6">9:42 AM · left side</text>
+          <text x="120" y="52" fill="#b9a8f0" font-family="Syne" font-size="7" font-weight="800">TAP</text>
+
+          <rect x="24" y="74" width="112" height="34" rx="8" fill="rgba(143,217,196,0.14)" stroke="rgba(143,217,196,0.3)"/>
+          <circle cx="40" cy="91" r="8" fill="#8fd9c4" opacity="0.6"/>
+          <text x="56" y="88" fill="#f1f0f6" font-family="Syne" font-size="9" font-weight="700">Pump</text>
+          <text x="56" y="100" fill="#84838f" font-family="Inter" font-size="6">last: 3h 10m ago</text>
+          <text x="120" y="94" fill="#8fd9c4" font-family="Syne" font-size="7" font-weight="800">TAP</text>
+
+          <rect x="24" y="116" width="112" height="34" rx="8" fill="rgba(243,198,165,0.14)" stroke="rgba(243,198,165,0.3)"/>
+          <circle cx="40" cy="133" r="8" fill="#f3c6a5" opacity="0.6"/>
+          <text x="56" y="130" fill="#f1f0f6" font-family="Syne" font-size="9" font-weight="700">Diaper</text>
+          <text x="56" y="142" fill="#84838f" font-family="Inter" font-size="6">7 today</text>
+          <text x="120" y="136" fill="#f3c6a5" font-family="Syne" font-size="7" font-weight="800">TAP</text>
+
+          <!-- sync pill -->
+          <rect x="24" y="168" width="112" height="22" rx="11" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+          <circle cx="38" cy="179" r="4" fill="#8fd9c4"/>
+          <text x="48" y="182" fill="#b7b6c2" font-family="Inter" font-size="7">Pump connected</text>
+        </g>
+        <!-- trend chart -->
+        <g transform="translate(300,30)">
+          <text x="0" y="0" fill="#b7b6c2" font-family="Syne" font-size="11" font-weight="700">Your typical range</text>
+          <rect x="0" y="40" width="300" height="60" rx="10" fill="rgba(143,217,196,0.1)"/>
+          <path d="M0 80 C 50 60, 100 90, 150 65 C 200 50, 250 75, 300 60" stroke="url(#trendGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="300" cy="60" r="5" fill="#8fd9c4"/>
+          <text x="0" y="120" fill="#84838f" font-family="Inter" font-size="9">Mon</text>
+          <text x="270" y="120" fill="#84838f" font-family="Inter" font-size="9">Sun</text>
+          <text x="0" y="150" fill="#b7b6c2" font-family="Syne" font-size="10" font-weight="600">"You're within your typical range this week."</text>
+        </g>
+        <text x="140" y="232" text-anchor="middle" fill="#6b6976" font-family="Inter" font-size="10" letter-spacing="2">ONE-HANDED QUICK LOG</text>
+        <text x="450" y="232" text-anchor="middle" fill="#6b6976" font-family="Inter" font-size="10" letter-spacing="2">GENTLE SUPPLY INSIGHTS</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- OBJECTIVE / GOALS -->
+<section class="reveal">
+  <div class="inner">
+    <div class="eyebrow">01 — The objective</div>
+    <h2 class="s-title">A daily companion, not another app to manage.</h2>
+    <p class="lede">The redesign set out to turn a feature-rich but overwhelming companion app into a calm, dependable part of a parent's routine — built around one-handed logging, gentle insights, and a visual language that feels supportive rather than clinical.</p>
+
+    <div class="goals-grid">
+      <div class="goals-col">
+        <h3><span class="dot"></span>Business goals</h3>
+        <ul>
+          <li>Increase daily active use during active pumping/feeding phases.</li>
+          <li>Improve onboarding completion and pump-device pairing success.</li>
+          <li>Drive accessory reorders and product registration through the app.</li>
+          <li>Reduce support tickets related to sync and connectivity issues.</li>
+        </ul>
+      </div>
+      <div class="goals-col">
+        <h3><span class="dot"></span>User goals</h3>
+        <ul>
+          <li>Log a pumping or feeding session in one hand, in seconds.</li>
+          <li>Understand milk supply trends without jargon or anxiety.</li>
+          <li>Get gentle, timely reminders that adapt to a changing schedule.</li>
+          <li>Share logs and schedules with a partner or caregiver.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND -->
+<section class="brand-section reveal">
+  <div class="inner">
+    <div class="eyebrow">02 — About the brand</div>
+    <h2 class="s-title">Clinical credibility, everyday usability.</h2>
+    <div class="brand-grid">
+      <div class="brand-text">
+        <p>Medela is a Swiss-founded company with decades of history in breastfeeding and lactation support, known for research-backed breast pump technology used by parents and hospitals worldwide. The brand's positioning blends <strong>clinical credibility</strong> with <strong>everyday usability</strong>.</p>
+        <p>The companion app needed to reflect both sides of that promise — trustworthy enough to feel at home in a hospital setting, and simple enough for a sleep-deprived parent to use at 3am with one hand, without reading a single instruction.</p>
+      </div>
+      <div class="brand-quote">Trustworthy enough for a NICU. Simple enough for 3am.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="reveal">
+  <div class="inner">
+    <div class="eyebrow">03 — The problem</div>
+    <h2 class="s-title">Everything, all at once, when there's no time for any of it.</h2>
+    <div class="problem-card">
+      <p>New and returning parents found it difficult to log sessions quickly while holding or feeding a baby, struggled to interpret supply trends without feeling anxious, and frequently lost confidence when Bluetooth pump-sync failed silently. The home dashboard tried to surface everything at once — schedules, tips, shop promotions, community posts — creating high cognitive load at exactly the moment users had the least bandwidth to process it.</p>
+    </div>
+    <div class="opp-list">
+      <div class="opp-item">
+        <div class="opp-num">OPPORTUNITY 01</div>
+        <p>Design true one-handed interaction patterns for logging, with minimal taps and large, thumb-reachable targets.</p>
+      </div>
+      <div class="opp-item">
+        <div class="opp-num">OPPORTUNITY 02</div>
+        <p>Make pump connectivity status always visible, with clear, calm recovery paths when sync fails.</p>
+      </div>
+      <div class="opp-item">
+        <div class="opp-num">OPPORTUNITY 03</div>
+        <p>Reframe supply data as gentle trends and ranges — not alarming single numbers out of context.</p>
+      </div>
+      <div class="opp-item">
+        <div class="opp-num">OPPORTUNITY 04</div>
+        <p>Introduce a shared "Care Circle" so logging and awareness aren't one person's sole responsibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section reveal">
+  <div class="inner">
+    <div class="eyebrow">04 — Process &amp; methods</div>
+    <h2 class="s-title">Research-led, accessibility-first.</h2>
+    <p class="lede">The project reduced the app to its essential daily jobs first, then layered in supportive insights and sharing features once the core loop felt effortless.</p>
+
+    <div class="process-row">
+      <div class="process-cell">
+        <div class="step-num">01</div>
+        <h4>Discover</h4>
+        <p>Heuristic evaluation, competitive analysis, and parent interviews to map real-world one-handed usage.</p>
+      </div>
+      <div class="process-cell">
+        <div class="step-num">02</div>
+        <h4>Define</h4>
+        <p>Proto-personas, journey maps, and a simplified IA built around three daily jobs: log, glance, trust.</p>
+      </div>
+      <div class="process-cell">
+        <div class="step-num">03</div>
+        <h4>Design</h4>
+        <p>Low- to high-fidelity wireframes and a calm, accessible visual system with a quick-log pattern.</p>
+      </div>
+      <div class="process-cell">
+        <div class="step-num">04</div>
+        <h4>Deliver</h4>
+        <p>Usability sessions with parents and a projected-impact model to validate direction before build.</p>
+      </div>
+    </div>
+
+    <div class="findings">
+      <h4>Heuristic evaluation — selected findings</h4>
+      <div class="heuristic-grid">
+        <div class="heuristic">
+          <div class="icon">01</div>
+          <p><strong>Visibility of system status</strong> — pump-sync status was buried in settings, so failed syncs went unnoticed for hours.</p>
+        </div>
+        <div class="heuristic">
+          <div class="icon">02</div>
+          <p><strong>Error prevention</strong> — no confirmation step, leading to accidental duplicate or deleted entries while holding a baby.</p>
+        </div>
+        <div class="heuristic">
+          <div class="icon">03</div>
+          <p><strong>Flexibility &amp; efficiency</strong> — no shortcuts for repetitive actions; every session required the same multi-step flow.</p>
+        </div>
+        <div class="heuristic">
+          <div class="icon">04</div>
+          <p><strong>Aesthetic &amp; minimalist design</strong> — the dashboard surfaced ten-plus modules at once, competing for attention.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="findings">
+      <h4>What parents told us — interviews (n=8)</h4>
+      <div class="quote-strip">
+        <div class="quote-cell"><p>I need to log this with one thumb while I'm holding her — I can't type anything.</p></div>
+        <div class="quote-cell"><p>I didn't realize the pump stopped syncing until I'd lost two days of data.</p></div>
+        <div class="quote-cell"><p>The chart made me think something was wrong, but it turned out to be totally normal.</p></div>
+        <div class="quote-cell"><p>My partner has no idea what's been logged unless I tell him directly.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS -->
+<section class="reveal">
+  <div class="inner">
+    <div class="eyebrow">05 — Users &amp; personas</div>
+    <h2 class="s-title">Three phases of the same journey.</h2>
+    <p class="lede">Interview themes converged into three proto-personas representing distinct phases of the feeding journey — and very different contexts of use.</p>
+
+    <div class="persona-grid">
+      <div class="persona-card">
+        <div class="persona-head">
+          <div class="persona-avatar">EP</div>
+          <div>
+            <h4>The Exhausted New Parent</h4>
+            <span>0–3 months · one-handed · low sleep</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <h5>Goals</h5>
+          <ul>
+            <li>Log feeds and pumps with minimal effort</li>
+            <li>Build a routine without added stress</li>
+          </ul>
+          <h5>Pain points</h5>
+          <ul>
+            <li>No time or hands for multi-step flows</li>
+            <li>Anxious about "normal" supply numbers</li>
+          </ul>
+          <h5>Needs from the app</h5>
+          <ul>
+            <li>One-tap, one-handed quick log</li>
+            <li>Calm, reassuring trend language</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-head">
+          <div class="persona-avatar">RP</div>
+          <div>
+            <h4>The Returning-to-Work Pumper</h4>
+            <span>3–9 months · busy schedule · desktop &amp; mobile</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <h5>Goals</h5>
+          <ul>
+            <li>Fit pumping sessions around meetings</li>
+            <li>Track output to plan a freezer stash</li>
+          </ul>
+          <h5>Pain points</h5>
+          <ul>
+            <li>Pump-sync failures go unnoticed</li>
+            <li>Hard to plan around an unpredictable schedule</li>
+          </ul>
+          <h5>Needs from the app</h5>
+          <ul>
+            <li>Always-visible sync status</li>
+            <li>Smart, adaptive reminders</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-head">
+          <div class="persona-avatar">PC</div>
+          <div>
+            <h4>The Partner / Co-Caregiver</h4>
+            <span>Any stage · shared responsibility · mobile</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <h5>Goals</h5>
+          <ul>
+            <li>Stay informed without asking</li>
+            <li>Take on logging during night shifts</li>
+          </ul>
+          <h5>Pain points</h5>
+          <ul>
+            <li>No visibility into existing logs</li>
+            <li>Feels like a guest in someone else's app</li>
+          </ul>
+          <h5>Needs from the app</h5>
+          <ul>
+            <li>Shared Care Circle access</li>
+            <li>Equal, role-based logging permissions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="solutions-section reveal">
+  <div class="inner">
+    <div class="eyebrow">06 — The solutions</div>
+    <h2 class="s-title">Four screens, one calmer daily loop.</h2>
+    <p class="lede">Each concept addresses a specific research finding directly — turning a dense dashboard into a focused, supportive companion.</p>
+
+    <div class="screen-row">
+      <div class="screen-mock">
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+          <div>
+            <div class="phone-greeting">Good morning, Jess</div>
+            <div class="phone-sub">Here's today at a glance</div>
+          </div>
+          <div class="quicklog-cards">
+            <div class="qcard">
+              <div class="left"><div class="ic feed">🍼</div><div><div class="label">Feed</div><div class="time">9:42 AM · left side</div></div></div>
+              <div class="tap">Tap</div>
+            </div>
+            <div class="qcard">
+              <div class="left"><div class="ic pump">⏱</div><div><div class="label">Pump</div><div class="time">last 3h 10m ago</div></div></div>
+              <div class="tap">Tap</div>
+            </div>
+            <div class="qcard">
+              <div class="left"><div class="ic diaper">🌙</div><div><div class="label">Diaper</div><div class="time">7 today</div></div></div>
+              <div class="tap">Tap</div>
+            </div>
+          </div>
+          <div class="undo-toast">
+            <span class="ut-label">Feed logged · 9:42 AM</span>
+            <span class="ut-action">UNDO</span>
+          </div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">One-Handed Quick Log</div>
+        <h3>Logging in under five seconds</h3>
+        <p>A persistent, thumb-reachable card stack plus a home-screen widget lets a parent log a feed, pump, or diaper change in a single tap, with the time auto-filled. A gentle 3-second undo replaces the old confirmation dialog — fast, but forgiving.</p>
+      </div>
+    </div>
+
+    <div class="screen-row reverse">
+      <div class="screen-mock">
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+          <div>
+            <div class="phone-greeting">Pump status</div>
+            <div class="phone-sub">Needs your attention</div>
+          </div>
+          <div class="sync-pill"><span class="sync-dot warn"></span> Reconnecting to pump…</div>
+          <div class="pump-graphic">
+            <div class="pump-ring">68%</div>
+            <div class="pg-label">Battery · last synced 14 min ago</div>
+          </div>
+          <div class="recover-steps">
+            <div class="recover-step"><span class="rn">1</span>Move within 2m of your pump</div>
+            <div class="recover-step"><span class="rn">2</span>Toggle Bluetooth off, then on</div>
+            <div class="recover-step"><span class="rn">3</span>Tap "Reconnect now"</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">Always-On Sync Status</div>
+        <h3>No more silent failures</h3>
+        <p>A persistent, plain-language status indicator — Connected, Syncing, or Needs attention — replaces a buried settings toggle. When something goes wrong, three short steps guide recovery instead of a generic error message.</p>
+      </div>
+    </div>
+
+    <div class="screen-row">
+      <div class="screen-mock">
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+          <div>
+            <div class="phone-greeting">Your supply trend</div>
+            <div class="phone-sub">Last 7 days</div>
+          </div>
+          <div class="insight-card">
+            <div class="ih"><span>This week</span><strong>4.2 oz avg</strong></div>
+            <div class="trend-chart">
+              <div class="trend-band"></div>
+              <svg class="trend-line" viewBox="0 0 280 90" preserveAspectRatio="none">
+                <path d="M0 50 C 40 30, 80 60, 120 40 C 160 25, 200 50, 280 35" stroke="#8fd9c4" stroke-width="3" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="insight-tag">You're within your typical range this week — no action needed.</div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">Gentle Supply Insights</div>
+        <h3>Context before numbers</h3>
+        <p>Supply trends are shown as a soft band representing a typical range, with a short, supportive sentence leading the view. Raw numbers are still one tap away for anyone who wants them — but they're no longer the first thing a tired parent sees.</p>
+      </div>
+    </div>
+
+    <div class="screen-row reverse">
+      <div class="screen-mock">
+        <div class="phone-screen">
+          <div class="phone-status"><span>9:41</span><span>●●● 100%</span></div>
+          <div>
+            <div class="phone-greeting">Care Circle</div>
+            <div class="phone-sub">Shared with 1 caregiver</div>
+          </div>
+          <div class="care-row">
+            <div class="care-avatars">
+              <div class="care-avatar a1">JL</div>
+              <div class="care-avatar a2">MP</div>
+            </div>
+          </div>
+          <div class="care-feed">
+            <div class="care-item"><div class="ca a2">MP</div><div><b>Marcus</b> logged a Feed · 2:14 AM</div></div>
+            <div class="care-item"><div class="ca a1">JL</div><div><b>Jess</b> logged a Pump · 7:30 AM</div></div>
+            <div class="care-item"><div class="ca a2">MP</div><div><b>Marcus</b> changed a Diaper · 8:05 AM</div></div>
+            <div class="care-item"><div class="ca a1">JL</div><div><b>Jess</b> logged a Feed · 9:42 AM</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">Care Circle</div>
+        <h3>Shared logging, shared visibility</h3>
+        <p>Partners and caregivers get role-based access to the same live log — including night-shift entries. No more re-explaining what's already been done; everyone sees the same up-to-date picture.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact-section reveal">
+  <div class="inner">
+    <div class="eyebrow">07 — Projected impact</div>
+    <h2 class="s-title">What a calmer loop could change.</h2>
+    <p class="impact-note">Method: a moderated usability study with eight parents on the high-fidelity prototype, plus a one-week unmoderated diary study for logging frequency. Baselines are estimated from the original-app audit and common engagement benchmarks for health &amp; wellness apps. Figures are <strong style="color:var(--text)">projected, portfolio-only estimates</strong> — not official Medela analytics.</p>
+
+    <div class="impact-grid">
+      <div class="impact-stat">
+        <div class="label">Time to log a session</div>
+        <div class="vals"><span class="from">18s</span><span class="arrow">→</span><span class="to">5s</span></div>
+      </div>
+      <div class="impact-stat">
+        <div class="label">Daily logging completion</div>
+        <div class="vals"><span class="from">45%</span><span class="arrow">→</span><span class="to">82%</span></div>
+      </div>
+      <div class="impact-stat">
+        <div class="label">Onboarding completion</div>
+        <div class="vals"><span class="from">58%</span><span class="arrow">→</span><span class="to">89%</span></div>
+      </div>
+      <div class="impact-stat">
+        <div class="label">Sync-related support tickets</div>
+        <div class="vals"><span class="to" style="font-size:1.6rem">−60%</span></div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">Task success rate — usability sessions (n=8)</div>
+      <div class="chart-sub">Baseline (audit) vs. after redesign (prototype)</div>
+      <div class="legend">
+        <span><i style="background:var(--border2)"></i>Baseline</span>
+        <span><i style="background:linear-gradient(90deg,var(--lav),var(--mint))"></i>After redesign</span>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Log a pumping session one-handed</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:46%"></div><div class="bar-fill" data-w="94"></div></div>
+        <div class="bar-vals"><span class="old">46%</span><span class="new">94%</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Notice &amp; resolve a failed pump sync</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:31%"></div><div class="bar-fill" data-w="88"></div></div>
+        <div class="bar-vals"><span class="old">31%</span><span class="new">88%</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Correctly interpret a supply trend</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:52%"></div><div class="bar-fill" data-w="91"></div></div>
+        <div class="bar-vals"><span class="old">52%</span><span class="new">91%</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Invite a partner to the Care Circle</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:0%"></div><div class="bar-fill" data-w="97"></div></div>
+        <div class="bar-vals"><span class="old">—</span><span class="new alt">97%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECTION -->
+<section class="reflection-section reveal">
+  <div class="inner">
+    <div class="eyebrow">08 — Reflection &amp; next steps</div>
+    <h2 class="s-title">Three jobs, done well, beat ten done halfway.</h2>
+    <div class="reflection-grid">
+      <div class="reflection-text">
+        <p>This redesign reframes the app around three things a tired parent can reliably do with one hand: log, glance, and trust that the pump is connected. By moving from a feature-dense dashboard to a focused daily loop — and reframing health data as calm, supportive trends — the experience aims to reduce anxiety while increasing the small daily interactions that build long-term engagement and trust in the Medela ecosystem.</p>
+        <p>If this were a live engagement, the next step would be validating these directions with real households and a clinical review of all supply-related language.</p>
+      </div>
+      <div class="next-list">
+        <div class="next-item"><span class="ni">01</span>A/B test the quick-log widget against the existing multi-step flow</div>
+        <div class="next-item"><span class="ni">02</span>Validate supply-trend language with a lactation-consultant review panel</div>
+        <div class="next-item"><span class="ni">03</span>Test Care Circle permissions across different family structures</div>
+        <div class="next-item"><span class="ni">04</span>Run a 4+ week diary study to measure retention and habit formation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / PDF -->
+<section class="cta-section reveal">
+  <div class="inner">
+    <div class="eyebrow">Full breakdown</div>
+    <h2 class="cta-title">Want the full research, flows &amp; design system?</h2>
+    <p class="cta-sub">The detailed write-up includes the complete heuristic audit, competitive analysis, information architecture, accessibility notes, and the full projected-impact model.</p>
+    <a href="medela-app-case-study.pdf" class="pdf-card" target="_blank" rel="noopener">
+      <div class="pdf-icon">PDF</div>
+      <div class="pdf-info">
+        <h4>View the detailed case study</h4>
+        <span>Full report · 9 pages</span>
+      </div>
+      <div class="pdf-arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <span>© 2026 Nadia Soren</span>
+  <span>Medela Pump &amp; Care — Self-Initiated UX Case Study</span>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        if (e.target.querySelector('.bar-fill')) {
+          e.target.querySelectorAll('.bar-fill').forEach(b => {
+            requestAnimationFrame(() => { b.style.width = b.dataset.w + '%'; });
+          });
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

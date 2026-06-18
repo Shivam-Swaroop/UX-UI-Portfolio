@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Nadia Soren — UX Manager & Design Strategist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #0d0f14;
+    --surface:     #131720;
+    --surface2:    #191d28;
+    --surface3:    #1f2330;
+    --border:      rgba(255,255,255,0.07);
+    --border2:     rgba(255,255,255,0.13);
+    --text:        #f2ede6;
+    --muted:       #636880;
+    --muted2:      #a0a6b8;
+    --accent:      #c8622a;
+    --accent2:     #e07840;
+    --accent-dim:  rgba(200,98,42,0.12);
+    --amber:       #d4943a;
+    --amber-dim:   rgba(212,148,58,0.1);
+    --green:       #4a9e7a;
+    --green-dim:   rgba(74,158,122,0.1);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Roboto',sans-serif;font-weight:300;
+    overflow-x:hidden;cursor:none;
+  }
+
+  /* CURSOR */
+  #cur{position:fixed;width:8px;height:8px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s;}
+  #cur-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(200,98,42,0.55);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);}
+  body:has(a:hover) #cur{width:14px;height:14px;}
+  body:has(a:hover) #cur-ring{width:52px;height:52px;border-color:rgba(200,98,42,0.25);}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:1.25rem 3.5rem;border-bottom:1px solid transparent;transition:border-color .3s,background .3s;}
+  nav.scrolled{background:rgba(13,15,20,0.94);border-color:var(--border);backdrop-filter:blur(14px);}
+  .nav-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:1.1rem;letter-spacing:0.04em;color:var(--text);text-decoration:none;}
+  .nav-logo em{font-style:italic;color:var(--accent);}
+  .nav-links{display:flex;gap:2.5rem;list-style:none;}
+  .nav-links a{font-family:'Roboto',sans-serif;font-size:0.7rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+  .nav-cta{font-family:'Roboto',sans-serif;font-size:0.7rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text);background:transparent;border:1px solid var(--accent);text-decoration:none;padding:0.55rem 1.3rem;border-radius:2px;transition:background .2s,color .2s;}
+  .nav-cta:hover{background:var(--accent);color:var(--bg);}
+
+  /* HERO */
+  .hero{
+    min-height:100vh;padding:0 3.5rem;
+    display:grid;grid-template-columns:1.1fr 0.9fr;
+    position:relative;overflow:hidden;
+  }
+  .hero::before{content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 70% 60% at 100% 30%,rgba(200,98,42,0.08) 0%,transparent 55%),
+      radial-gradient(ellipse 50% 50% at 0% 80%,rgba(212,148,58,0.05) 0%,transparent 55%);
+    pointer-events:none;}
+  /* subtle dot grid */
+  .hero::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);
+    background-size:32px 32px;}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:9rem 4rem 6rem 0;z-index:2;}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:0.7rem;font-family:'Roboto',sans-serif;font-size:0.6rem;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;opacity:0;animation:up .7s .2s forwards;}
+  .hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--accent);}
+  .hero-title{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(3rem,5.5vw,5.5rem);line-height:1.05;letter-spacing:-0.01em;opacity:0;animation:up .9s .35s forwards;}
+  .hero-title em{font-style:italic;color:var(--accent);}
+  .hero-subtitle{font-family:'Roboto',sans-serif;font-size:0.8rem;font-weight:400;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted2);margin-top:1.2rem;opacity:0;animation:up .8s .5s forwards;}
+  .hero-desc{font-size:1rem;line-height:1.9;color:var(--muted2);max-width:480px;margin-top:2rem;opacity:0;animation:up .8s .65s forwards;}
+  .hero-desc strong{color:var(--text);font-weight:400;}
+  .hero-actions{display:flex;gap:1.2rem;margin-top:2.8rem;flex-wrap:wrap;opacity:0;animation:up .8s .8s forwards;}
+
+  /* Download button — the star of the page */
+  .btn-download{
+    display:inline-flex;align-items:center;gap:0.8rem;
+    font-family:'Roboto',sans-serif;font-size:0.75rem;font-weight:500;
+    letter-spacing:0.14em;text-transform:uppercase;
+    background:var(--accent);color:var(--bg);
+    text-decoration:none;padding:1rem 2rem;border-radius:2px;
+    transition:background .2s,transform .15s;
+    position:relative;overflow:hidden;
+  }
+  .btn-download::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.08),transparent);pointer-events:none;}
+  .btn-download:hover{background:var(--accent2);transform:translateY(-2px);}
+  .btn-download svg{flex-shrink:0;}
+  .btn-ghost{font-family:'Roboto',sans-serif;font-size:0.7rem;font-weight:400;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted2);text-decoration:none;border-bottom:1px solid var(--border2);padding-bottom:2px;transition:color .2s,border-color .2s;}
+  .btn-ghost:hover{color:var(--text);border-color:var(--text);}
+
+  .hero-right{border-left:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;padding:9rem 0 6rem 4rem;position:relative;}
+  /* avatar placeholder */
+  .avatar-block{position:relative;margin-bottom:3rem;opacity:0;animation:fadeIn 1s .9s forwards;}
+  .avatar{
+    width:220px;height:260px;background:var(--surface2);
+    border:1px solid var(--border2);border-radius:4px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .avatar::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,var(--accent-dim),transparent 65%);}
+  .avatar-initials{font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;color:rgba(200,98,42,0.35);}
+  .avatar-tag{
+    position:absolute;bottom:-1px;right:-1px;
+    font-family:'Roboto',sans-serif;font-size:0.58rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;
+    background:var(--accent);color:var(--bg);padding:0.4rem 0.8rem;
+  }
+  .quick-facts{display:flex;flex-direction:column;gap:1px;opacity:0;animation:fadeIn 1s 1.1s forwards;}
+  .qf-row{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1rem 0;border-bottom:1px solid var(--border);
+    font-size:0.8rem;
+  }
+  .qf-row:last-child{border-bottom:none;}
+  .qf-label{color:var(--muted);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;}
+  .qf-val{color:var(--text);font-weight:400;}
+  .qf-val em{font-style:normal;color:var(--accent);}
+
+  /* SOCIAL STRIP */
+  .social-strip{
+    background:var(--surface);
+    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    padding:2.5rem 3.5rem;
+  }
+  .social-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
+  .social-label{font-family:'Roboto',sans-serif;font-size:0.6rem;letter-spacing:0.24em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+  .social-divider{width:1px;height:28px;background:var(--border2);}
+  .social-links{display:flex;gap:1rem;flex-wrap:wrap;flex:1;}
+  .social-link{
+    display:inline-flex;align-items:center;gap:0.6rem;
+    font-family:'Roboto',sans-serif;font-size:0.7rem;font-weight:500;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--muted2);text-decoration:none;
+    border:1px solid var(--border2);padding:0.55rem 1.1rem;border-radius:2px;
+    transition:border-color .2s,color .2s,background .2s;
+  }
+  .social-link:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+  .social-link svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;fill:none;stroke-width:1.5;}
+  .social-link.primary{background:var(--accent-dim);border-color:rgba(200,98,42,0.4);color:var(--accent);}
+  .social-link.primary:hover{background:var(--accent);color:var(--bg);}
+
+  /* SECTIONS */
+  .page-inner{max-width:1100px;margin:0 auto;padding:0 3.5rem;}
+  section{padding:6rem 3.5rem;}
+  .s-label{font-family:'Roboto',sans-serif;font-size:0.6rem;font-weight:500;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:1rem;}
+  .s-label::before{content:'';width:20px;height:1px;background:var(--accent);}
+  .s-heading{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(2rem,3.5vw,3.2rem);line-height:1.1;letter-spacing:-0.01em;}
+  .s-heading em{font-style:italic;color:var(--accent);}
+
+  /* STORY */
+  .story-section{background:var(--surface);}
+  .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:3rem;}
+  .story-body{font-size:0.92rem;line-height:2;color:var(--muted2);}
+  .story-body p+p{margin-top:1.2rem;}
+  .story-body strong{color:var(--text);font-weight:500;}
+  .story-body em{font-style:italic;color:var(--amber);}
+  .story-pull{
+    border-left:2px solid var(--accent);padding-left:1.8rem;
+    font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;
+    font-style:italic;line-height:1.55;color:var(--text);
+    margin-bottom:2.5rem;
+  }
+  .values-list{display:flex;flex-direction:column;gap:1px;margin-top:0;}
+  .value-item{
+    padding:1.4rem 1.6rem;background:var(--bg);border:1px solid var(--border);border-top:none;
+    transition:background .2s,border-color .2s;
+  }
+  .value-item:first-child{border-top:1px solid var(--border);}
+  .value-item:hover{background:var(--surface2);border-color:var(--border2);}
+  .value-item h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:0.4rem;display:flex;align-items:center;gap:0.8rem;}
+  .value-item h4::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
+  .value-item p{font-size:0.78rem;line-height:1.75;color:var(--muted2);}
+
+  /* STATS */
+  .stats-section{}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:3rem;}
+  .stat-cell{background:var(--surface);padding:2.2rem 1.8rem;transition:background .25s;position:relative;overflow:hidden;}
+  .stat-cell:hover{background:var(--surface2);}
+  .stat-cell::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:var(--accent);transition:height .4s;}
+  .stat-cell:hover::before{height:100%;}
+  .stat-val{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;line-height:1;color:var(--text);}
+  .stat-val sup{font-size:1.5rem;color:var(--accent);}
+  .stat-label{font-family:'Roboto',sans-serif;font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;}
+  .stat-desc{font-size:0.72rem;line-height:1.6;color:var(--muted2);margin-top:0.6rem;}
+
+  /* EXPERIENCE TIMELINE */
+  .exp-section{background:var(--surface);}
+  .timeline{margin-top:3rem;display:flex;flex-direction:column;gap:0;}
+  .timeline-item{
+    display:grid;grid-template-columns:160px 1fr;gap:2.5rem;
+    padding:2.5rem 0;border-bottom:1px solid var(--border);
+    transition:padding-left .25s;
+  }
+  .timeline-item:hover{padding-left:0.5rem;}
+  .timeline-item:last-child{border-bottom:none;}
+  .tl-left{text-align:right;}
+  .tl-year{font-family:'Roboto',sans-serif;font-size:0.65rem;letter-spacing:0.1em;color:var(--muted);}
+  .tl-co{font-family:'Roboto',sans-serif;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-top:0.3rem;}
+  .tl-role{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;line-height:1.2;}
+  .tl-desc{font-size:0.82rem;line-height:1.85;color:var(--muted2);margin-top:0.6rem;}
+  .tl-chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1rem;}
+  .tl-chip{font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);border:1px solid var(--border);padding:0.2rem 0.55rem;border-radius:2px;}
+
+  /* SKILLS */
+  .skills-section{}
+  .skills-content{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:3rem;}
+  .skill-group{margin-bottom:2rem;}
+  .skill-group-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:1.2rem;color:var(--text);}
+  .skill-bars{display:flex;flex-direction:column;gap:1px;}
+  .skill-row-item{padding:0.85rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .skill-row-item:last-child{border-bottom:none;}
+  .skill-name-label{font-family:'Roboto',sans-serif;font-size:0.78rem;font-weight:500;color:var(--text);}
+  .skill-track{width:100px;height:2px;background:var(--border2);position:relative;flex-shrink:0;}
+  .skill-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--amber));}
+  .tools-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;}
+  .tool-item{
+    font-family:'Roboto',sans-serif;font-size:0.7rem;font-weight:400;
+    border:1px solid var(--border);padding:0.65rem 0.9rem;border-radius:2px;
+    color:var(--muted2);transition:border-color .2s,color .2s;
+  }
+  .tool-item:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* SPEAKING + AI */
+  .speaking-section{background:var(--surface);}
+  .speaking-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-top:3rem;}
+  .speaking-list{display:flex;flex-direction:column;gap:1px;}
+  .speaking-item{
+    padding:1.4rem;background:var(--bg);border:1px solid var(--border);border-top:none;
+    transition:background .2s;display:flex;gap:1.2rem;align-items:flex-start;
+  }
+  .speaking-item:first-child{border-top:1px solid var(--border);}
+  .speaking-item:hover{background:var(--surface2);}
+  .sp-year{font-family:'Roboto',sans-serif;font-size:0.62rem;letter-spacing:0.08em;color:var(--muted);padding-top:2px;white-space:nowrap;}
+  .sp-title{font-family:'Playfair Display',serif;font-size:0.95rem;font-weight:700;margin-bottom:0.2rem;}
+  .sp-venue{font-family:'Roboto',sans-serif;font-size:0.7rem;color:var(--accent);letter-spacing:0.1em;}
+  .ai-badges{display:flex;flex-direction:column;gap:0.8rem;}
+  .ai-badge{
+    display:flex;align-items:center;gap:1rem;
+    border:1px solid var(--border);padding:1.2rem 1.5rem;border-radius:4px;
+    background:var(--bg);transition:border-color .2s,background .2s;
+  }
+  .ai-badge:hover{border-color:var(--accent);background:var(--accent-dim);}
+  .ai-icon{
+    width:38px;height:38px;border-radius:8px;flex-shrink:0;
+    background:var(--accent-dim);border:1px solid rgba(200,98,42,.3);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--accent);font-size:1rem;
+  }
+  .ai-badge-text h4{font-family:'Roboto',sans-serif;font-size:0.78rem;font-weight:500;margin-bottom:0.2rem;}
+  .ai-badge-text p{font-size:0.68rem;color:var(--muted2);}
+
+  /* RESUME CARD */
+  .resume-section{}
+  .resume-card{
+    margin-top:3rem;border:1px solid var(--border2);border-radius:8px;
+    background:var(--surface);overflow:hidden;
+    display:grid;grid-template-columns:1fr auto;align-items:center;
+    padding:3rem;gap:3rem;
+    transition:border-color .2s;
+  }
+  .resume-card:hover{border-color:rgba(200,98,42,0.4);}
+  .rc-left h3{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;margin-bottom:0.5rem;}
+  .rc-left h3 em{font-style:italic;color:var(--accent);}
+  .rc-left p{font-size:0.85rem;line-height:1.8;color:var(--muted2);max-width:480px;margin-top:0.8rem;}
+  .rc-items{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;}
+  .rc-item{
+    font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;
+    border:1px solid var(--border);color:var(--muted);padding:0.28rem 0.65rem;border-radius:2px;
+  }
+  .rc-right{display:flex;flex-direction:column;align-items:center;gap:1.2rem;}
+  .file-thumb{
+    width:100px;height:130px;background:var(--surface2);border:1px solid var(--border2);
+    border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:0.5rem;position:relative;overflow:hidden;
+  }
+  .file-thumb::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,var(--accent-dim),transparent 70%);}
+  .file-thumb svg{color:var(--accent);position:relative;}
+  .file-thumb span{font-family:'Roboto',sans-serif;font-size:0.55rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);position:relative;}
+  .file-size{font-family:'Roboto',sans-serif;font-size:0.62rem;color:var(--muted);}
+
+  /* CONTACT FOOTER */
+  .contact-footer{
+    background:var(--surface);border-top:1px solid var(--border);
+    padding:6rem 3.5rem;text-align:center;position:relative;overflow:hidden;
+  }
+  .contact-footer::before{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(200,98,42,0.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);}
+  .cf-inner{position:relative;z-index:1;}
+  .cf-heading{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;line-height:1.05;margin-top:0.5rem;}
+  .cf-heading em{font-style:italic;color:var(--accent);}
+  .cf-sub{font-size:0.88rem;line-height:1.9;color:var(--muted2);max-width:420px;margin:1.5rem auto 2.5rem;}
+  .cf-email{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,2.5vw,2.2rem);font-weight:400;color:var(--text);text-decoration:none;border-bottom:1px solid rgba(242,237,230,0.2);padding-bottom:0.5rem;transition:color .2s,border-color .2s;display:inline-block;}
+  .cf-email:hover{color:var(--accent);border-color:var(--accent);}
+  .cf-social{display:flex;justify-content:center;gap:0.8rem;margin-top:3rem;flex-wrap:wrap;}
+
+  /* FOOTER */
+  footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 3.5rem;display:flex;justify-content:space-between;align-items:center;}
+  footer span{font-family:'Roboto',sans-serif;font-size:0.6rem;letter-spacing:0.12em;color:var(--muted);}
+
+  /* ANIMATIONS */
+  @keyframes up{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  ::-webkit-scrollbar{width:3px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border2);}
+
+  @media(max-width:900px){
+    nav,footer{padding:1.1rem 1.5rem;}
+    .hero,.social-strip,section,.contact-footer{padding-left:1.5rem;padding-right:1.5rem;}
+    .hero{grid-template-columns:1fr;}
+    .hero-right{display:none;}
+    .story-grid,.skills-content,.speaking-grid,.timeline-item{grid-template-columns:1fr;}
+    .tl-left{text-align:left;}
+    .stats-grid{grid-template-columns:1fr 1fr;}
+    .resume-card{grid-template-columns:1fr;gap:2rem;}
+    .rc-right{align-items:flex-start;}
+    .cf-social{gap:0.5rem;}
+  }
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="portfolio.html" class="nav-logo">Nadia <em>Soren</em></a>
+  <ul class="nav-links">
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="portfolio.html#work">Work</a></li>
+    <li><a href="blog-ai-workflow-integrations.html">Writing</a></li>
+    <li><a href="about-me.html" class="active">About</a></li>
+  </ul>
+  <a href="mailto:nadia@nadiasoren.com" class="nav-cta">Let's Talk</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">About me</div>
+    <h1 class="hero-title">
+      Designer.<br>
+      Leader.<br>
+      <em>Curious.</em>
+    </h1>
+    <p class="hero-subtitle">UX Manager &amp; Design Strategist · 12 Years</p>
+    <p class="hero-desc">
+      I build design teams that <strong>ship things that matter</strong> — and design processes that are honest about what works and what doesn't. My practice sits at the intersection of rigorous research, collaborative craft, and <strong>human-centred AI</strong>.
+    </p>
+    <div class="hero-actions">
+      <a href="nadia_soren_resume.pdf" download="Nadia_Soren_Resume.pdf" class="btn-download">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M2 11v1.5A1.5 1.5 0 003.5 14h9A1.5 1.5 0 0014 12.5V11"/></svg>
+        Download Résumé
+      </a>
+      <a href="portfolio.html#work" class="btn-ghost">View Case Studies →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="avatar-block">
+      <div class="avatar">
+        <span class="avatar-initials">NS</span>
+        <span class="avatar-tag">Available 2026</span>
+      </div>
+    </div>
+    <div class="quick-facts">
+      <div class="qf-row"><span class="qf-label">Based in</span><span class="qf-val">San Francisco, CA</span></div>
+      <div class="qf-row"><span class="qf-label">Currently</span><span class="qf-val"><em>Head of UX</em>, Meridian</span></div>
+      <div class="qf-row"><span class="qf-label">Team size</span><span class="qf-val">11 designers</span></div>
+      <div class="qf-row"><span class="qf-label">Speaking</span><span class="qf-val">IDSM Conference</span></div>
+      <div class="qf-row"><span class="qf-label">Mentoring</span><span class="qf-val">ADPList</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- SOCIAL STRIP -->
+<div class="social-strip">
+  <div class="social-inner">
+    <span class="social-label">Connect</span>
+    <div class="social-divider"></div>
+    <div class="social-links">
+      <a href="https://linkedin.com/in/nadiasoren" target="_blank" rel="noopener" class="social-link primary">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://dribbble.com" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        Dribbble
+      </a>
+      <a href="https://medium.com" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M2.846 6.887c.03-.295-.083-.586-.303-.784l-2.24-2.7v-.403H7.26l5.378 11.795 4.728-11.795H24v.403l-1.917 1.837c-.165.126-.247.333-.213.538v13.498c-.034.204.048.411.213.537l1.87 1.837v.403h-9.41v-.403l1.937-1.882c.19-.19.19-.246.19-.537V8.69l-5.386 13.688h-.728L4.927 8.69v9.174c-.052.385.076.774.347 1.052l2.52 3.058v.402H.643v-.402l2.52-3.058c.27-.279.39-.67.33-1.052V6.887z"/></svg>
+        Medium
+      </a>
+      <a href="https://adplist.org" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        ADPList
+      </a>
+      <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M4 4l16 16M4 20L20 4"/></svg>
+        X / Twitter
+      </a>
+      <a href="mailto:nadia@nadiasoren.com" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="story-section reveal">
+  <div class="s-label">My story</div>
+  <h2 class="s-heading">Twelve years of saying<br><em>"let's find out."</em></h2>
+  <div class="story-grid">
+    <div class="story-body">
+      <p>I came to UX through the back door — a graphic design degree that made me obsessed with <strong>how things look</strong>, followed by a user interview at my first agency that taught me how much more I cared about <strong>how things work</strong>.</p>
+      <p>That tension — between craft and function, between what's beautiful and what's usable — has driven every role I've taken since. I've worked in agencies and in-house, with early-stage startups and FTSE 100s, with teams of two and teams of forty.</p>
+      <p>What I've learned is that the problems are almost always the same: the team is shipping too fast to understand who they're shipping for, or they understand the user but can't get stakeholders to act on it, or they have great research but no process to translate it into decisions.</p>
+      <p>My job is to build the conditions where <strong>good design can actually happen</strong> — the culture, the process, the vocabulary, and the trust. Then get out of the way so the designers can do their best work.</p>
+      <p>Since 2022 I've been embedding <em>AI-assisted workflows</em> into every phase of the design process — not as a novelty, but as infrastructure. Synthesis agents, generative ideation, AI-moderated testing, post-launch anomaly detection. Human judgment stays in control. AI handles the heavy lifting.</p>
+    </div>
+    <div>
+      <div class="story-pull">"Great design culture is built on psychological safety, clear critique frameworks, and shared ownership of outcomes."</div>
+      <div class="values-list">
+        <div class="value-item"><h4>Research before assumptions</h4><p>I don't let internal opinions substitute for user evidence. Every significant design decision traces back to something a real person said, did, or struggled with.</p></div>
+        <div class="value-item"><h4>Transparency over theatre</h4><p>Design presentations should inform decisions, not perform effort. I show process honestly — including the dead ends and the things that surprised us.</p></div>
+        <div class="value-item"><h4>Outcomes over outputs</h4><p>The measure of a good design isn't the number of screens shipped. It's whether the thing we shipped changed user behaviour in the direction we intended.</p></div>
+        <div class="value-item"><h4>Craft as a signal</h4><p>Attention to visual and interaction detail isn't vanity — it's a signal to every collaborator that this team takes the user experience seriously. Quality is contagious.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section reveal">
+  <div class="s-label">By the numbers</div>
+  <h2 class="s-heading">Work that <em>measures itself.</em></h2>
+  <div class="stats-grid">
+    <div class="stat-cell"><div class="stat-val">12</div><div class="stat-label">Years Experience</div><div class="stat-desc">Spanning agency, in-house startup, and enterprise design leadership.</div></div>
+    <div class="stat-cell"><div class="stat-val">40<sup>+</sup></div><div class="stat-label">Products Shipped</div><div class="stat-desc">Across fintech, health, e-commerce, enterprise SaaS, and consumer apps.</div></div>
+    <div class="stat-cell"><div class="stat-val">11</div><div class="stat-label">Designers Led</div><div class="stat-desc">Cross-functional team including researchers, interaction designers, and system designers.</div></div>
+    <div class="stat-cell"><div class="stat-val">4<sup>×</sup></div><div class="stat-label">Research Velocity</div><div class="stat-desc">Average improvement in research synthesis speed using AI-integrated workflows.</div></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE TIMELINE -->
+<section class="exp-section reveal">
+  <div class="s-label">Experience</div>
+  <h2 class="s-heading">Where I've <em>worked.</em></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="tl-left"><div class="tl-year">2021 — Present</div><div class="tl-co">Meridian Financial Technologies</div></div>
+      <div><div class="tl-role">Head of UX Design</div><div class="tl-desc">Leading a cross-functional team of 11 designers across mobile, web, and design systems. Reduced onboarding drop-off by 34%, embedded AI-assisted research workflows, and partnered with CPO on a 3-year UX maturity roadmap.</div><div class="tl-chips"><span class="tl-chip">Team Leadership</span><span class="tl-chip">AI Workflows</span><span class="tl-chip">Fintech</span><span class="tl-chip">Design Systems</span></div></div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-left"><div class="tl-year">2018 — 2021</div><div class="tl-co">Orvio Health</div></div>
+      <div><div class="tl-role">Senior UX Manager</div><div class="tl-desc">Built and scaled the UX practice from 2 to 8 designers. Established Orvio DS — the company's first design system — cutting design-to-dev handoff time by 40% across 4 product lines. Achieved WCAG 2.1 AA compliance across all products.</div><div class="tl-chips"><span class="tl-chip">Design System</span><span class="tl-chip">Health Tech</span><span class="tl-chip">Accessibility</span><span class="tl-chip">Scaling</span></div></div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-left"><div class="tl-year">2015 — 2018</div><div class="tl-co">Stratos Agency</div></div>
+      <div><div class="tl-role">UX Lead</div><div class="tl-desc">Led end-to-end design for 20+ client products across fintech, e-commerce, and media verticals. Introduced the Jobs-to-be-Done framework company-wide and managed a team of 4 designers and 2 researchers.</div><div class="tl-chips"><span class="tl-chip">Agency</span><span class="tl-chip">JTBD</span><span class="tl-chip">Multi-vertical</span></div></div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-left"><div class="tl-year">2012 — 2015</div><div class="tl-co">Kallux Studio</div></div>
+      <div><div class="tl-role">UX / Interaction Designer</div><div class="tl-desc">Designed interfaces for early-stage startups and enterprise clients. Introduced user testing into a previously research-free agency process and developed a deep expertise in accessibility.</div><div class="tl-chips"><span class="tl-chip">Startups</span><span class="tl-chip">Accessibility</span><span class="tl-chip">Research</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section reveal">
+  <div class="s-label">Skills</div>
+  <h2 class="s-heading">What I <em>bring.</em></h2>
+  <div class="skills-content">
+    <div>
+      <div class="skill-group">
+        <div class="skill-group-title">Research &amp; Strategy</div>
+        <div class="skill-bars">
+          <div class="skill-row-item"><span class="skill-name-label">User Research &amp; Synthesis</span><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">Heuristic &amp; Competitive Analysis</span><div class="skill-track"><div class="skill-fill" style="width:92%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">A/B Test Design &amp; Analysis</span><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">Journey Mapping &amp; Service Design</span><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-group" style="margin-top:2.5rem;">
+        <div class="skill-group-title">Design Practice</div>
+        <div class="skill-bars">
+          <div class="skill-row-item"><span class="skill-name-label">Design Systems</span><div class="skill-track"><div class="skill-fill" style="width:93%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">Interaction Design</span><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">Accessibility (WCAG 2.1)</span><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">AI-Integrated Workflows</span><div class="skill-track"><div class="skill-fill" style="width:85%"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group">
+        <div class="skill-group-title">Leadership</div>
+        <div class="skill-bars">
+          <div class="skill-row-item"><span class="skill-name-label">Team Building &amp; Mentoring</span><div class="skill-track"><div class="skill-fill" style="width:95%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">Design Ops &amp; Process</span><div class="skill-track"><div class="skill-fill" style="width:88%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">Stakeholder Management</span><div class="skill-track"><div class="skill-fill" style="width:90%"></div></div></div>
+          <div class="skill-row-item"><span class="skill-name-label">Cross-functional Facilitation</span><div class="skill-track"><div class="skill-fill" style="width:92%"></div></div></div>
+        </div>
+      </div>
+      <div class="skill-group" style="margin-top:2.5rem;">
+        <div class="skill-group-title">Tools</div>
+        <div class="tools-grid">
+          <div class="tool-item">Figma</div><div class="tool-item">Protopie</div><div class="tool-item">Maze</div>
+          <div class="tool-item">Dovetail</div><div class="tool-item">Miro</div><div class="tool-item">Notion</div>
+          <div class="tool-item">Amplitude</div><div class="tool-item">Jira</div><div class="tool-item">GitHub</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKING + AI WORKFLOW -->
+<section class="speaking-section reveal">
+  <div class="s-label">Speaking &amp; AI practice</div>
+  <h2 class="s-heading">Sharing what I <em>learn.</em></h2>
+  <div class="speaking-grid">
+    <div>
+      <p style="font-size:.85rem;line-height:1.9;color:var(--muted2);margin-bottom:1.5rem;">I speak on design systems, AI integration in design, and building psychologically safe design teams. Conference sessions and workshops available.</p>
+      <div class="speaking-list">
+        <div class="speaking-item"><span class="sp-year">2024</span><div><div class="sp-title">AI-Assisted Design: From Novelty to Infrastructure</div><div class="sp-venue">IDSM Conference, London</div></div></div>
+        <div class="speaking-item"><span class="sp-year">2023</span><div><div class="sp-title">Design Systems at Scale: Lessons from Orvio DS</div><div class="sp-venue">IDSM Conference, Berlin</div></div></div>
+        <div class="speaking-item"><span class="sp-year">2022</span><div><div class="sp-title">Building Research Culture in Fast-Moving Teams</div><div class="sp-venue">IDSM Conference, Amsterdam</div></div></div>
+        <div class="speaking-item"><span class="sp-year">2021</span><div><div class="sp-title">Accessibility is Not a Feature</div><div class="sp-venue">Design Systems Conference, Online</div></div></div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:.85rem;line-height:1.9;color:var(--muted2);margin-bottom:1.5rem;">My AI workflow integrates across all four design phases — discover, generate, prototype, and ship. Human judgment stays in control; AI handles the heavy lifting.</p>
+      <div class="ai-badges">
+        <div class="ai-badge"><div class="ai-icon">🔍</div><div class="ai-badge-text"><h4>01 — Discover &amp; Synthesize</h4><p>Research synthesis agents, affinity mapping automation, opportunity scoring</p></div></div>
+        <div class="ai-badge"><div class="ai-icon">⚡</div><div class="ai-badge-text"><h4>02 — Generate &amp; Diverge</h4><p>Concept variation engines, design-system-aware generation, competitive pattern analysis</p></div></div>
+        <div class="ai-badge"><div class="ai-icon">✓</div><div class="ai-badge-text"><h4>03 — Prototype &amp; Validate</h4><p>Rapid interactive prototypes, AI-moderated usability tests, accessibility pre-checks</p></div></div>
+        <div class="ai-badge"><div class="ai-icon">↻</div><div class="ai-badge-text"><h4>04 — Ship &amp; Iterate</h4><p>Behavioural anomaly detection, feedback loop automation, design debt tracking</p></div></div>
+      </div>
+      <a href="blog-ai-workflow-integrations.html" style="display:inline-flex;align-items:center;gap:.6rem;margin-top:1.5rem;font-family:'Roboto',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(200,98,42,.35);padding-bottom:2px;transition:border-color .2s;">Read the full write-up →</a>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME DOWNLOAD -->
+<section class="resume-section reveal">
+  <div class="s-label">Résumé</div>
+  <h2 class="s-heading">Full <em>credentials.</em></h2>
+  <div class="resume-card">
+    <div class="rc-left">
+      <h3>Nadia Soren — <em>UX Manager</em></h3>
+      <p>Full résumé including experience, skills, education, certifications, and publications. Updated June 2026. Available as a single-page PDF optimised for ATS and human reading alike.</p>
+      <div class="rc-items">
+        <span class="rc-item">12 years experience</span>
+        <span class="rc-item">4 companies</span>
+        <span class="rc-item">40+ projects</span>
+        <span class="rc-item">PDF · 1 page</span>
+      </div>
+      <div style="margin-top:2rem;">
+        <a href="nadia_soren_resume.pdf" download="Nadia_Soren_Resume.pdf" class="btn-download" style="font-size:.72rem;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M5 7l3 3 3-3"/><path d="M2 11v1.5A1.5 1.5 0 003.5 14h9A1.5 1.5 0 0014 12.5V11"/></svg>
+          Download Résumé PDF
+        </a>
+        <a href="mailto:nadia@nadiasoren.com?subject=Résumé request" style="display:inline-flex;align-items:center;gap:.5rem;margin-left:1.2rem;font-family:'Roboto',sans-serif;font-size:.68rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);text-decoration:none;border-bottom:1px solid var(--border2);padding-bottom:2px;transition:color .2s;">Request via email →</a>
+      </div>
+    </div>
+    <div class="rc-right">
+      <div class="file-thumb">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>PDF</span>
+      </div>
+      <span class="file-size">1 page · ~120 KB</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT FOOTER -->
+<div class="contact-footer">
+  <div class="cf-inner reveal">
+    <div class="s-label" style="justify-content:center;"><span style="display:none"></span>Let's work together</div>
+    <h2 class="cf-heading">Open to <em>senior roles</em><br>&amp; advisory work.</h2>
+    <p class="cf-sub">Design leadership, advisory engagements, conference speaking, and workshop facilitation. Always happy to talk UX with fellow practitioners.</p>
+    <a href="mailto:nadia@nadiasoren.com" class="cf-email">nadia@nadiasoren.com</a>
+    <div class="cf-social">
+      <a href="https://linkedin.com/in/nadiasoren" target="_blank" rel="noopener" class="social-link primary">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://dribbble.com" target="_blank" rel="noopener" class="social-link">Dribbble</a>
+      <a href="https://medium.com" target="_blank" rel="noopener" class="social-link">Medium</a>
+      <a href="https://adplist.org" target="_blank" rel="noopener" class="social-link">ADPList</a>
+      <a href="nadia_soren_resume.pdf" download="Nadia_Soren_Resume.pdf" class="social-link">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Résumé PDF
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 Nadia Soren · All rights reserved</span>
+  <span>San Francisco, CA</span>
+  <span>Designed with intention.</span>
+</footer>
+
+<script>
+  const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+  (function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60));
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

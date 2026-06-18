@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jefferson's Bourbon — UX Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0a08;
+    --surface: #15110d;
+    --surface2: #1c1612;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.13);
+    --text: #f3ede4;
+    --muted: #8a7f72;
+    --muted2: #b3a89b;
+    --copper: #d97a3a;
+    --copper-bright: #ff9a4d;
+    --copper-dim: rgba(217,122,58,0.1);
+    --green: #8fae6e;
+    --gold: #e8c468;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Inter', sans-serif; font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  section, header, footer { padding: 6rem 3rem; }
+  .inner { max-width: 1100px; margin: 0 auto; }
+
+  /* TOP BAR */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 3rem; background: rgba(12,10,8,0.85); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted2); text-decoration: none; transition: color .2s;
+  }
+  .back-link:hover { color: var(--copper-bright); }
+  .topbar-tag {
+    font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+  }
+
+  /* HERO */
+  .hero {
+    position: relative; padding-top: 5rem; overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 0%, rgba(217,122,58,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 10% 100%, rgba(232,196,104,0.08) 0%, transparent 60%);
+  }
+  .hero-tags { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .pill {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    border: 1px solid var(--border2); color: var(--muted2);
+    padding: 0.45rem 0.9rem; border-radius: 999px;
+  }
+  .pill.copper { color: var(--copper-bright); border-color: rgba(217,122,58,0.35); background: var(--copper-dim); }
+  .hero-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    line-height: 1.02; letter-spacing: -0.03em; max-width: 900px;
+  }
+  .hero-title em { font-style: italic; color: var(--copper-bright); font-weight: 600; }
+  .hero-sub {
+    font-size: 1rem; line-height: 1.85; color: var(--muted2);
+    max-width: 620px; margin-top: 1.8rem;
+  }
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    margin-top: 4rem; border: 1px solid var(--border); background: var(--border);
+  }
+  .hero-meta div { background: var(--bg); padding: 1.5rem 1.6rem; }
+  .meta-label {
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .meta-val { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; line-height: 1.4; }
+
+  /* HERO VISUAL — bottle + flavor wheel */
+  .hero-visual {
+    margin-top: 4rem; display: flex; justify-content: center;
+    padding: 3rem 0 1rem;
+  }
+
+  /* SECTION HEADERS */
+  .eyebrow {
+    font-family: 'Syne', sans-serif; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.32em; text-transform: uppercase; color: var(--copper-bright);
+    margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--copper-bright); }
+  h2.s-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(1.9rem, 3.5vw, 3rem); letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .lede {
+    font-size: 0.95rem; line-height: 1.85; color: var(--muted2);
+    max-width: 700px; margin-top: 1.2rem;
+  }
+
+  /* GOALS */
+  .goals-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); }
+  .goals-col { background: var(--surface); padding: 2.2rem; }
+  .goals-col h3 {
+    font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .goals-col h3 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--copper-bright); }
+  .goals-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+  .goals-col li {
+    font-size: 0.85rem; line-height: 1.7; color: var(--muted2);
+    padding-left: 1.2rem; position: relative;
+  }
+  .goals-col li::before {
+    content: ''; position: absolute; left: 0; top: 0.55em; width: 6px; height: 1px; background: var(--copper-bright);
+  }
+
+  /* BRAND SECTION */
+  .brand-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .brand-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center; margin-top: 2.5rem; }
+  .brand-text { font-size: 0.92rem; line-height: 1.95; color: var(--muted2); }
+  .brand-text strong { color: var(--text); font-weight: 600; }
+  .brand-quote {
+    font-family: 'Syne', sans-serif; font-style: italic; font-weight: 500;
+    font-size: 1.3rem; line-height: 1.6; color: var(--gold);
+    border-left: 2px solid var(--gold); padding-left: 1.5rem; margin-top: 1.5rem;
+  }
+
+  /* PROBLEM */
+  .problem-card {
+    margin-top: 2.5rem; border: 1px solid var(--border2); border-radius: 12px;
+    padding: 2.5rem; background: linear-gradient(135deg, var(--copper-dim), transparent 60%);
+  }
+  .problem-card p { font-size: 0.95rem; line-height: 1.9; color: var(--muted2); }
+  .opp-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 2.5rem; }
+  .opp-item {
+    border: 1px solid var(--border); border-radius: 10px; padding: 1.6rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .opp-item:hover { border-color: var(--copper); transform: translateY(-3px); }
+  .opp-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem; color: var(--copper-bright); margin-bottom: 0.8rem; }
+  .opp-item p { font-size: 0.82rem; line-height: 1.7; color: var(--muted2); }
+
+  /* PROCESS TIMELINE */
+  .process-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .process-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); }
+  .process-cell { background: var(--surface); padding: 2rem; position: relative; }
+  .process-cell .step-num {
+    font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800;
+    color: transparent; -webkit-text-stroke: 1px var(--border2);
+    line-height: 1; margin-bottom: 1.2rem;
+  }
+  .process-cell h4 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.7rem; }
+  .process-cell p { font-size: 0.78rem; line-height: 1.7; color: var(--muted); }
+
+  .findings { margin-top: 3rem; }
+  .findings h4 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 1.2rem; }
+  .heuristic-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.8rem; }
+  .heuristic { display: flex; gap: 0.9rem; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .heuristic .icon {
+    flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 800; color: var(--copper-bright);
+  }
+  .heuristic p { font-size: 0.8rem; line-height: 1.7; color: var(--muted2); }
+  .heuristic strong { color: var(--text); }
+
+  .quote-strip { margin-top: 3rem; display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .quote-cell { background: var(--bg); padding: 1.6rem 1.8rem; }
+  .quote-cell p {
+    font-family: 'Syne', sans-serif; font-style: italic; font-weight: 500; font-size: 0.95rem;
+    line-height: 1.6; color: var(--muted2);
+  }
+  .quote-cell p::before { content: '\201C'; color: var(--copper-bright); }
+  .quote-cell p::after { content: '\201D'; color: var(--copper-bright); }
+
+  /* PERSONAS */
+  .persona-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; margin-top: 3rem; }
+  .persona-card {
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .persona-card:hover { border-color: var(--copper); transform: translateY(-4px); }
+  .persona-head {
+    padding: 1.8rem; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .persona-avatar {
+    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+    background: var(--copper-dim); color: var(--copper-bright);
+    border: 1px solid rgba(217,122,58,0.3);
+  }
+  .persona-head h4 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .persona-head span { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 0.2rem; }
+  .persona-body { padding: 1.6rem 1.8rem 1.8rem; }
+  .persona-body h5 {
+    font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--copper-bright);
+    margin-bottom: 0.7rem; margin-top: 1.2rem;
+  }
+  .persona-body h5:first-child { margin-top: 0; }
+  .persona-body ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .persona-body li { font-size: 0.8rem; line-height: 1.6; color: var(--muted2); padding-left: 1rem; position: relative; }
+  .persona-body li::before { content: '–'; position: absolute; left: 0; color: var(--muted); }
+
+  /* SOLUTIONS / SCREENS */
+  .solutions-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .screen-row { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; margin-top: 4rem; }
+  .screen-row:first-of-type { margin-top: 3rem; }
+  .screen-row.reverse { direction: rtl; }
+  .screen-row.reverse > * { direction: ltr; }
+  .screen-mock {
+    border: 1px solid var(--border2); border-radius: 12px; overflow: hidden;
+    background: var(--bg); aspect-ratio: 4/3;
+  }
+  .screen-text .tag-mini {
+    font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--copper-bright); margin-bottom: 0.8rem;
+  }
+  .screen-text h3 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; letter-spacing: -0.01em; }
+  .screen-text p { font-size: 0.85rem; line-height: 1.85; color: var(--muted2); }
+
+  /* MOCK: Finder */
+  .mock-finder { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; height: 100%; }
+  .mock-topbar { display: flex; justify-content: space-between; align-items: center; }
+  .mock-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.85rem; }
+  .mock-steps { display: flex; gap: 6px; }
+  .mock-step { width: 22px; height: 4px; border-radius: 2px; background: var(--border2); }
+  .mock-step.active { background: var(--copper-bright); }
+  .mock-q { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-top: 0.5rem; }
+  .mock-options { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: 0.5rem; }
+  .mock-opt {
+    border: 1px solid var(--border2); border-radius: 8px; padding: 1rem;
+    font-size: 0.75rem; color: var(--muted2); display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .mock-opt .swatch { width: 100%; height: 28px; border-radius: 4px; }
+  .mock-opt.sel { border-color: var(--copper-bright); background: var(--copper-dim); color: var(--text); }
+  .mock-cta {
+    margin-top: auto; background: var(--copper-bright); color: #1c1612;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem;
+    text-align: center; padding: 0.8rem; border-radius: 8px; letter-spacing: 0.05em;
+  }
+
+  /* MOCK: compare */
+  .mock-compare { padding: 1.5rem; height: 100%; display: flex; flex-direction: column; gap: 1rem; }
+  .mock-compare-head { display: flex; justify-content: space-between; }
+  .mock-compare-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; flex: 1; }
+  .mock-bottle-card { border: 1px solid var(--border2); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .mock-bottle-img {
+    height: 70px; border-radius: 6px;
+    background: linear-gradient(180deg, rgba(217,122,58,0.25), rgba(232,196,104,0.1));
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mock-row { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 0.4rem; }
+  .mock-row span:last-child { color: var(--text); font-weight: 600; }
+  .mock-badges { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .mock-badge {
+    font-size: 0.58rem; padding: 0.2rem 0.5rem; border-radius: 999px;
+    border: 1px solid var(--border2); color: var(--muted2);
+  }
+
+  /* MOCK: locator */
+  .mock-locator { padding: 1.5rem; height: 100%; display: flex; flex-direction: column; gap: 0.8rem; }
+  .mock-search { border: 1px solid var(--border2); border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.75rem; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+  .mock-map {
+    flex: 1; border-radius: 8px; position: relative; overflow: hidden;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 28px),
+      var(--surface2);
+  }
+  .pin {
+    position: absolute; width: 14px; height: 14px; border-radius: 50% 50% 50% 0;
+    background: var(--copper-bright); transform: rotate(-45deg);
+  }
+  .pin.lg { width: 20px; height: 20px; box-shadow: 0 0 0 6px rgba(217,122,58,0.18); }
+  .mock-list-item { display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border2); border-radius: 8px; padding: 0.7rem 1rem; font-size: 0.72rem; }
+  .mock-list-item .dist { color: var(--copper-bright); font-weight: 700; font-family: 'Syne', sans-serif; }
+
+  /* MOCK: Story scroll */
+  .mock-story { height: 100%; display: flex; flex-direction: column; }
+  .mock-story-chapter {
+    flex: 1; display: flex; align-items: flex-end; padding: 1.2rem; position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-story-chapter:last-child { border-bottom: none; }
+  .mock-story-chapter:nth-child(1) { background: linear-gradient(135deg, #2a1d12, #1c1612); }
+  .mock-story-chapter:nth-child(2) { background: linear-gradient(135deg, #1c2a26, #1c1612); }
+  .mock-story-chapter:nth-child(3) { background: linear-gradient(135deg, #2a2412, #1c1612); }
+  .mock-story-chapter span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .mock-story-chapter h6 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-top: 0.3rem; }
+
+  /* IMPACT METRICS */
+  .impact-section { }
+  .impact-note { font-size: 0.78rem; color: var(--muted); font-style: italic; margin-top: 1rem; max-width: 650px; line-height: 1.7; }
+  .impact-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; margin-top: 3rem; background: var(--border); border: 1px solid var(--border); }
+  .impact-stat { background: var(--surface); padding: 2rem 1.6rem; }
+  .impact-stat .label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .impact-stat .vals { display: flex; align-items: baseline; gap: 0.6rem; }
+  .impact-stat .from { font-size: 1rem; color: var(--muted); text-decoration: line-through; }
+  .impact-stat .to { font-family: 'Syne', sans-serif; font-size: 2.1rem; font-weight: 800; color: var(--green); }
+  .impact-stat .arrow { color: var(--muted); font-size: 0.9rem; }
+
+  .chart-wrap { margin-top: 3rem; border: 1px solid var(--border); border-radius: 12px; padding: 2rem; background: var(--surface); }
+  .chart-title { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .chart-sub { font-size: 0.75rem; color: var(--muted); margin-bottom: 2rem; }
+  .bar-row { display: grid; grid-template-columns: 220px 1fr 110px; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-label { font-size: 0.78rem; color: var(--muted2); }
+  .bar-track { height: 22px; background: var(--surface2); border-radius: 4px; position: relative; overflow: hidden; }
+  .bar-fill-base { position: absolute; top: 0; left: 0; bottom: 0; background: var(--border2); border-radius: 4px; }
+  .bar-fill {
+    position: absolute; top: 0; left: 0; bottom: 0; border-radius: 4px;
+    background: linear-gradient(90deg, var(--copper), var(--green));
+    width: 0; transition: width 1.4s cubic-bezier(.22,.61,.36,1);
+  }
+  .bar-vals { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; text-align: right; white-space: nowrap; }
+  .bar-vals .old { color: var(--muted); font-weight: 400; text-decoration: line-through; margin-right: 0.4rem; }
+  .bar-vals .new { color: var(--green); }
+  .legend { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; font-size: 0.7rem; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+  /* REFLECTION */
+  .reflection-section { background: var(--surface); border-top: 1px solid var(--border); }
+  .reflection-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4rem; margin-top: 2.5rem; align-items: start; }
+  .reflection-text p { font-size: 0.95rem; line-height: 1.95; color: var(--muted2); }
+  .reflection-text p + p { margin-top: 1rem; }
+  .next-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .next-item { background: var(--bg); padding: 1.1rem 1.3rem; font-size: 0.8rem; color: var(--muted2); display: flex; gap: 0.8rem; }
+  .next-item .ni { color: var(--copper-bright); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.75rem; }
+
+  /* CTA / PDF LINK */
+  .cta-section {
+    text-align: center; border-top: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 100%, rgba(217,122,58,0.14) 0%, transparent 60%);
+  }
+  .cta-section .eyebrow { justify-content: center; }
+  .cta-section .eyebrow::before { display: none; }
+  .cta-title {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2rem, 4.5vw, 3.5rem); letter-spacing: -0.02em; line-height: 1.1;
+    max-width: 700px; margin: 0 auto;
+  }
+  .cta-sub { font-size: 0.9rem; color: var(--muted2); max-width: 500px; margin: 1.2rem auto 0; line-height: 1.8; }
+  .pdf-card {
+    margin: 2.8rem auto 0; max-width: 420px;
+    border: 1px solid var(--border2); border-radius: 12px;
+    padding: 1.6rem 1.8rem; display: flex; align-items: center; gap: 1.2rem;
+    text-decoration: none; transition: border-color .2s, transform .2s, background .2s;
+    background: var(--surface);
+  }
+  .pdf-card:hover { border-color: var(--copper); transform: translateY(-3px); background: var(--surface2); }
+  .pdf-icon {
+    width: 46px; height: 46px; flex-shrink: 0; border-radius: 8px;
+    background: var(--copper-dim); border: 1px solid rgba(217,122,58,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--copper-bright); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.7rem;
+  }
+  .pdf-info { text-align: left; flex: 1; }
+  .pdf-info h4 { font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700; }
+  .pdf-info span { font-size: 0.7rem; color: var(--muted); }
+  .pdf-arrow { color: var(--copper-bright); font-size: 1.1rem; }
+
+  /* FOOTER */
+  footer.page-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border); padding: 2rem 3rem;
+  }
+  footer.page-footer span { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); }
+
+  @media (max-width: 900px) {
+    section, header, footer { padding: 4rem 1.5rem; }
+    .topbar { padding: 1rem 1.5rem; }
+    .hero-meta { grid-template-columns: 1fr 1fr; }
+    .goals-grid, .brand-grid, .quote-strip, .reflection-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .opp-list { grid-template-columns: 1fr; }
+    .process-row { grid-template-columns: 1fr 1fr; }
+    .heuristic-grid { grid-template-columns: 1fr; }
+    .persona-grid { grid-template-columns: 1fr; }
+    .screen-row, .screen-row.reverse { grid-template-columns: 1fr; direction: ltr; }
+    .impact-grid { grid-template-columns: 1fr 1fr; }
+    .bar-row { grid-template-columns: 1fr; gap: 0.4rem; text-align: left; }
+    .bar-vals { text-align: left; }
+    footer.page-footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="portfolio.html" class="back-link">
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M5 1L1 5M1 5L5 9M1 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Back to portfolio
+  </a>
+  <span class="topbar-tag">Case Study 01 / 03</span>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="inner">
+    <div class="hero-tags">
+      <span class="pill copper">Premium Spirits</span>
+      <span class="pill">Web Redesign</span>
+      <span class="pill">Research-Led</span>
+      <span class="pill">2018</span>
+    </div>
+    <h1 class="hero-title">Jefferson's Bourbon — guiding every pour from <em>curiosity</em> to <em>cart</em>.</h1>
+    <p class="hero-sub">A self-initiated UX redesign blending heritage storytelling with modern usability — turning a beautiful but confusing bourbon site into a guided, conversion-friendly experience for newcomers, enthusiasts, and gift-buyers alike.</p>
+
+    <div class="hero-meta">
+      <div>
+        <div class="meta-label">Role</div>
+        <div class="meta-val">UX Designer — Research, Wireframes &amp; Prototyping</div>
+      </div>
+      <div>
+        <div class="meta-label">Timeline</div>
+        <div class="meta-val">Jul – Dec 2018 · 6 months</div>
+      </div>
+      <div>
+        <div class="meta-label">Methods</div>
+        <div class="meta-val">Heuristics, Interviews, Personas, Wireframes</div>
+      </div>
+      <div>
+        <div class="meta-label">Focus</div>
+        <div class="meta-val">Discovery, Comparison &amp; Where-to-Buy</div>
+      </div>
+    </div>
+
+    <!-- Hero visual: bottle silhouette + flavor radial -->
+    <div class="hero-visual">
+      <svg width="640" height="220" viewBox="0 0 640 220" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a bourbon bottle silhouette beside a flavor profile wheel">
+        <defs>
+          <linearGradient id="bottleGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#d97a3a" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#e8c468" stop-opacity="0.18"/>
+          </linearGradient>
+          <radialGradient id="wheelGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#d97a3a" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#d97a3a" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <!-- bottle -->
+        <g transform="translate(60,10)">
+          <rect x="38" y="0" width="24" height="26" rx="3" fill="url(#bottleGrad)" stroke="#d97a3a" stroke-opacity="0.4"/>
+          <path d="M30 26 L70 26 L82 60 L82 190 Q82 200 72 200 L28 200 Q18 200 18 190 L18 60 Z" fill="url(#bottleGrad)" stroke="#d97a3a" stroke-opacity="0.5" stroke-width="1.5"/>
+          <rect x="22" y="95" width="56" height="56" rx="2" fill="rgba(243,237,228,0.06)" stroke="rgba(243,237,228,0.18)"/>
+          <text x="50" y="118" text-anchor="middle" fill="#e8c468" font-family="Syne" font-size="9" font-weight="700" letter-spacing="2">JEFFERSON'S</text>
+          <text x="50" y="134" text-anchor="middle" fill="#b3a89b" font-family="Inter" font-size="7" letter-spacing="3">BOURBON</text>
+          <line x1="22" y1="142" x2="78" y2="142" stroke="rgba(243,237,228,0.15)"/>
+          <text x="50" y="138" text-anchor="middle" fill="#8a7f72" font-family="Inter" font-size="6" letter-spacing="2">EST. 1799</text>
+        </g>
+        <!-- flavor wheel -->
+        <g transform="translate(420,110)">
+          <circle r="100" fill="url(#wheelGrad)"/>
+          <circle r="100" fill="none" stroke="rgba(243,237,228,0.08)"/>
+          <circle r="66" fill="none" stroke="rgba(243,237,228,0.08)"/>
+          <circle r="33" fill="none" stroke="rgba(243,237,228,0.08)"/>
+          <g stroke="rgba(243,237,228,0.08)">
+            <line x1="-100" y1="0" x2="100" y2="0"/>
+            <line x1="0" y1="-100" x2="0" y2="100"/>
+            <line x1="-71" y1="-71" x2="71" y2="71"/>
+            <line x1="-71" y1="71" x2="71" y2="-71"/>
+            <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(30)"/>
+            <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(60)"/>
+            <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(120)"/>
+            <line x1="-100" y1="0" x2="100" y2="0" transform="rotate(150)"/>
+          </g>
+          <circle cx="0" cy="0" r="3" fill="#e8c468"/>
+          <text x="0" y="-110" text-anchor="middle" fill="#e8c468" font-family="Syne" font-size="9" font-weight="700">Vanilla</text>
+          <text x="115" y="4" text-anchor="middle" fill="#d97a3a" font-family="Syne" font-size="9" font-weight="700">Caramel</text>
+          <text x="0" y="118" text-anchor="middle" fill="#8fae6e" font-family="Syne" font-size="9" font-weight="700">Oak</text>
+          <text x="-115" y="4" text-anchor="middle" fill="#b3a89b" font-family="Syne" font-size="9" font-weight="700">Spice</text>
+          <text x="78" y="-86" text-anchor="middle" fill="#8a7f72" font-family="Syne" font-size="8" font-weight="700">Smoke</text>
+          <text x="-78" y="-86" text-anchor="middle" fill="#8a7f72" font-family="Syne" font-size="8" font-weight="700">Honey</text>
+          <text x="78" y="92" text-anchor="middle" fill="#8a7f72" font-family="Syne" font-size="8" font-weight="700">Citrus</text>
+          <text x="-78" y="92" text-anchor="middle" fill="#8a7f72" font-family="Syne" font-size="8" font-weight="700">Nutty</text>
+        </g>
+        <text x="240" y="208" text-anchor="middle" fill="#6b6358" font-family="Inter" font-size="10" letter-spacing="2">PRODUCT EXPLORATION</text>
+        <text x="420" y="226" text-anchor="middle" fill="#6b6358" font-family="Inter" font-size="10" letter-spacing="2">FLAVOR PROFILE SYSTEM</text>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- OBJECTIVE / GOALS -->
+<section class="reveal">
+  <div class="inner">
+    <div class="eyebrow">01 — The objective</div>
+    <h2 class="s-title">Tradition meets a modern buying journey.</h2>
+    <p class="lede">The redesign aimed to create a sleek, user-friendly platform that captivates visitors and enhances the bourbon-buying journey — integrating modern design trends and best-in-class UX principles while staying true to a 220-year family legacy.</p>
+
+    <div class="goals-grid">
+      <div class="goals-col">
+        <h3><span class="dot"></span>Business goals</h3>
+        <ul>
+          <li>Improve discoverability of the bourbon collection — limited and essential lines.</li>
+          <li>Increase "Where to Buy" interactions and the add-to-cart experience.</li>
+          <li>Drive higher mobile engagement.</li>
+        </ul>
+      </div>
+      <div class="goals-col">
+        <h3><span class="dot"></span>User goals</h3>
+        <ul>
+          <li>Quickly understand the difference between bottles.</li>
+          <li>Find flavor notes, aroma, awards, and popularity.</li>
+          <li>Easily find bottle availability — online or nearby.</li>
+          <li>Get help choosing the perfect bottle, for self or as a gift.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND -->
+<section class="brand-section reveal">
+  <div class="inner">
+    <div class="eyebrow">02 — About the brand</div>
+    <h2 class="s-title">A legacy of craft and experimentation.</h2>
+    <div class="brand-grid">
+      <div class="brand-text">
+        <p>Jefferson's Bourbon is a premium spirit brand built on storytelling — founded in 1997 by Trey Zoeller and his father Chet, a noted bourbon historian. Together they continued a family whiskey tradition that traces back to Trey's <strong>8th-generation grandmother</strong>, arrested in 1799 for the "production and sales of spirituous liquors."</p>
+        <p>With Jefferson's, Trey pushes the boundaries of bourbon — from <strong>ocean-aged barrels</strong> to experimental finishes — while honoring the craft that defines the category. The redesign needed to carry that same spirit of curiosity into the digital experience.</p>
+      </div>
+      <div class="brand-quote">"Production and sales of spirituous liquors" — the family business since 1799.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="reveal">
+  <div class="inner">
+    <div class="eyebrow">03 — The problem</div>
+    <h2 class="s-title">Beautiful visuals, but no clear path to a decision.</h2>
+    <div class="problem-card">
+      <p>Premium spirits customers struggle to compare variants, understand flavor profiles, and find where to buy without friction. The original site relied heavily on visual storytelling but didn't provide a clear product-exploration journey or conversion cues — forcing users to rely on prior category knowledge just to choose and buy a bottle.</p>
+    </div>
+    <div class="opp-list">
+      <div class="opp-item">
+        <div class="opp-num">OPPORTUNITY 01</div>
+        <p>Guide product selection through a bourbon recommender — turning expertise into an interactive, friendly tool.</p>
+      </div>
+      <div class="opp-item">
+        <div class="opp-num">OPPORTUNITY 02</div>
+        <p>Improve the conversion journey through Where to Buy, store locator, and a smoother on-site buying experience.</p>
+      </div>
+      <div class="opp-item">
+        <div class="opp-num">OPPORTUNITY 03</div>
+        <p>Elevate the brand story with purposeful, scannable modules — without burying product information in copy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section reveal">
+  <div class="inner">
+    <div class="eyebrow">04 — Process &amp; methods</div>
+    <h2 class="s-title">A research-led, outcome-driven approach.</h2>
+    <p class="lede">The project focused on simplifying navigation, showcasing the brand's story, and creating an immersive experience for both newcomers and whiskey enthusiasts.</p>
+
+    <div class="process-row">
+      <div class="process-cell">
+        <div class="step-num">01</div>
+        <h4>Discover</h4>
+        <p>Heuristic evaluation and competitive analysis across four premium bourbon brands, plus guerrilla interviews with six participants.</p>
+      </div>
+      <div class="process-cell">
+        <div class="step-num">02</div>
+        <h4>Define</h4>
+        <p>Proto-personas, task flows, and information architecture mapping to align user needs with business goals.</p>
+      </div>
+      <div class="process-cell">
+        <div class="step-num">03</div>
+        <h4>Design</h4>
+        <p>Low- to high-fidelity wireframes and a responsive UI system reflecting premium craft and storytelling.</p>
+      </div>
+      <div class="process-cell">
+        <div class="step-num">04</div>
+        <h4>Deliver</h4>
+        <p>Moderated usability sessions and a projected-impact model to validate direction before development.</p>
+      </div>
+    </div>
+
+    <div class="findings">
+      <h4>Heuristic evaluation — selected findings</h4>
+      <div class="heuristic-grid">
+        <div class="heuristic">
+          <div class="icon">01</div>
+          <p><strong>Recognition over recall</strong> — bottle differences require memory; no side-by-side comparison existed.</p>
+        </div>
+        <div class="heuristic">
+          <div class="icon">02</div>
+          <p><strong>User control &amp; freedom</strong> — the age-gate and modal flows blocked easy exploration.</p>
+        </div>
+        <div class="heuristic">
+          <div class="icon">03</div>
+          <p><strong>Match with the real world</strong> — flavor notes and aging methods were buried in copy with few visual cues.</p>
+        </div>
+        <div class="heuristic">
+          <div class="icon">04</div>
+          <p><strong>Aesthetic &amp; minimalist design</strong> — beautiful visuals, but dense navigation and unclear hierarchy on mobile.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="findings">
+      <h4>What people told us — guerrilla interviews (n=6)</h4>
+      <div class="quote-strip">
+        <div class="quote-cell"><p>I want to know quickly which bottle fits me.</p></div>
+        <div class="quote-cell"><p>Flavor notes and price range should be upfront.</p></div>
+        <div class="quote-cell"><p>Show me stores near me and whether it's in stock.</p></div>
+        <div class="quote-cell"><p>On mobile I just want three things: products, flavor info, and where to buy.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS -->
+<section class="reveal">
+  <div class="inner">
+    <div class="eyebrow">05 — Users &amp; personas</div>
+    <h2 class="s-title">Three people, three very different journeys.</h2>
+    <p class="lede">Interview themes converged into three proto-personas representing the core audience the redesign needed to serve — from total beginners to seasoned collectors.</p>
+
+    <div class="persona-grid">
+      <div class="persona-card">
+        <div class="persona-head">
+          <div class="persona-avatar">CN</div>
+          <div>
+            <h4>The Curious Newbie</h4>
+            <span>25–35 · Beginner · Mobile-first</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <h5>Goals</h5>
+          <ul>
+            <li>Understand bourbon variety differences</li>
+            <li>Find a bottle matching taste preference</li>
+          </ul>
+          <h5>Pain points</h5>
+          <ul>
+            <li>Overwhelmed by options &amp; jargon</li>
+            <li>Unclear where to buy</li>
+          </ul>
+          <h5>Needs from the site</h5>
+          <ul>
+            <li>Simple guided Bourbon Finder</li>
+            <li>"Tastes like" in 5 seconds</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-head">
+          <div class="persona-avatar">BE</div>
+          <div>
+            <h4>The Bourbon Enthusiast</h4>
+            <span>30–55 · Advanced · Desktop &amp; mobile</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <h5>Goals</h5>
+          <ul>
+            <li>Discover limited / experimental releases</li>
+            <li>Understand aging techniques</li>
+          </ul>
+          <h5>Pain points</h5>
+          <ul>
+            <li>Details buried in long paragraphs</li>
+            <li>No comparison tool</li>
+          </ul>
+          <h5>Needs from the site</h5>
+          <ul>
+            <li>Side-by-side comparison</li>
+            <li>Deep, structured product info</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="persona-card">
+        <div class="persona-head">
+          <div class="persona-avatar">OG</div>
+          <div>
+            <h4>The Occasion Gifter</h4>
+            <span>28–50 · Low–mid experience · Mobile</span>
+          </div>
+        </div>
+        <div class="persona-body">
+          <h5>Goals</h5>
+          <ul>
+            <li>Find a premium-looking bottle</li>
+            <li>Get clarity on price &amp; availability</li>
+          </ul>
+          <h5>Pain points</h5>
+          <ul>
+            <li>Doesn't know variant differences</li>
+            <li>Availability unclear</li>
+          </ul>
+          <h5>Needs from the site</h5>
+          <ul>
+            <li>"Best gifts under $" entry point</li>
+            <li>Occasion-based finder</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="solutions-section reveal">
+  <div class="inner">
+    <div class="eyebrow">06 — The solutions</div>
+    <h2 class="s-title">Designing for discovery, comparison, and conversion.</h2>
+    <p class="lede">Four core experiences address the research findings directly — turning passive browsing into guided decision-making.</p>
+
+    <div class="screen-row">
+      <div class="screen-mock">
+        <div class="mock-finder">
+          <div class="mock-topbar">
+            <span class="mock-logo">JEFFERSON'S</span>
+            <div class="mock-steps">
+              <div class="mock-step active"></div>
+              <div class="mock-step active"></div>
+              <div class="mock-step"></div>
+              <div class="mock-step"></div>
+            </div>
+          </div>
+          <div class="mock-q">What flavor calls to you?</div>
+          <div class="mock-options">
+            <div class="mock-opt sel"><div class="swatch" style="background:#e8c468"></div>Sweet &amp; Vanilla</div>
+            <div class="mock-opt"><div class="swatch" style="background:#d97a3a"></div>Bold &amp; Smoky</div>
+            <div class="mock-opt"><div class="swatch" style="background:#8fae6e"></div>Oaky &amp; Dry</div>
+            <div class="mock-opt"><div class="swatch" style="background:#b3a89b"></div>Spiced &amp; Warm</div>
+          </div>
+          <div class="mock-cta">CONTINUE → STEP 3 OF 4</div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">Bourbon Finder</div>
+        <h3>A 3–5 step guided quiz</h3>
+        <p>Inputs on taste preference, proof tolerance, occasion, and budget return 1–3 recommended bottles with clear reasons — and a direct link to where each one is sold. Designed first for the Curious Newbie, but useful for everyone.</p>
+      </div>
+    </div>
+
+    <div class="screen-row reverse">
+      <div class="screen-mock">
+        <div class="mock-compare">
+          <div class="mock-compare-head">
+            <span class="mock-logo" style="font-size:0.78rem">Compare expressions</span>
+            <span style="font-size:0.65rem;color:var(--muted)">2 selected</span>
+          </div>
+          <div class="mock-compare-cols">
+            <div class="mock-bottle-card">
+              <div class="mock-bottle-img"></div>
+              <div class="mock-row"><span>Proof</span><span>90.2</span></div>
+              <div class="mock-row"><span>Aging</span><span>Ocean-Aged</span></div>
+              <div class="mock-row"><span>Awards</span><span>3</span></div>
+              <div class="mock-badges">
+                <span class="mock-badge">Vanilla</span>
+                <span class="mock-badge">Caramel</span>
+              </div>
+            </div>
+            <div class="mock-bottle-card">
+              <div class="mock-bottle-img"></div>
+              <div class="mock-row"><span>Proof</span><span>100.0</span></div>
+              <div class="mock-row"><span>Aging</span><span>Reserve</span></div>
+              <div class="mock-row"><span>Awards</span><span>5</span></div>
+              <div class="mock-badges">
+                <span class="mock-badge">Smoke</span>
+                <span class="mock-badge">Oak</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">Comparison &amp; Product Cards</div>
+        <h3>Side-by-side, at a glance</h3>
+        <p>Flavor notes, proof, aging method, awards, and price band sit side-by-side with visual flavor badges (oak, vanilla, caramel, spice, smoke) — giving the Enthusiast persona the structured depth they're looking for, fast.</p>
+      </div>
+    </div>
+
+    <div class="screen-row">
+      <div class="screen-mock">
+        <div class="mock-locator">
+          <div class="mock-search">
+            <span>Near: Louisville, KY</span>
+            <span style="color:var(--copper-bright)">⟳</span>
+          </div>
+          <div class="mock-map">
+            <div class="pin lg" style="top:45%;left:48%;"></div>
+            <div class="pin" style="top:25%;left:70%;"></div>
+            <div class="pin" style="top:65%;left:25%;"></div>
+            <div class="pin" style="top:30%;left:30%;"></div>
+          </div>
+          <div class="mock-list-item"><span>Whiskey Row Spirits</span><span class="dist">0.4 mi</span></div>
+          <div class="mock-list-item"><span>Heritage Liquor &amp; Wine</span><span class="dist">1.2 mi</span></div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">Where to Buy / Locator</div>
+        <h3>From "interested" to "in hand"</h3>
+        <p>Streamlined entry with auto-detect or zip/city search returns a retailer list and map with stock or call-to-confirm guidance — removing the single biggest drop-off point in the original journey.</p>
+      </div>
+    </div>
+
+    <div class="screen-row reverse">
+      <div class="screen-mock">
+        <div class="mock-story">
+          <div class="mock-story-chapter">
+            <div><span>Chapter 01</span><h6>Heritage</h6></div>
+          </div>
+          <div class="mock-story-chapter">
+            <div><span>Chapter 02</span><h6>Ocean Aging</h6></div>
+          </div>
+          <div class="mock-story-chapter">
+            <div><span>Chapter 03</span><h6>The Craft</h6></div>
+          </div>
+        </div>
+      </div>
+      <div class="screen-text">
+        <div class="tag-mini">Storytelling System</div>
+        <h3>Heritage, told in chapters</h3>
+        <p>A scroll-based, chaptered brand story — Heritage, Experimentation, Ocean Aging, Craft — paired with optional muted, captioned video loops. Purposeful and scannable, instead of one long wall of text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="impact-section reveal">
+  <div class="inner">
+    <div class="eyebrow">07 — Projected impact</div>
+    <h2 class="s-title">Modeling the difference a guided journey makes.</h2>
+    <p class="impact-note">Method: a six-person moderated usability study on the high-fidelity prototype, with unmoderated follow-ups for task timing. Baselines are estimated from the original-site audit and common e-commerce KPIs for premium CPG brands. Figures are <strong style="color:var(--text)">projected, portfolio-only estimates</strong> — not official brand analytics.</p>
+
+    <div class="impact-grid">
+      <div class="impact-stat">
+        <div class="label">Time to product</div>
+        <div class="vals"><span class="from">32s</span><span class="arrow">→</span><span class="to">12s</span></div>
+      </div>
+      <div class="impact-stat">
+        <div class="label">Mobile bounce rate</div>
+        <div class="vals"><span class="from">65%</span><span class="arrow">→</span><span class="to">38%</span></div>
+      </div>
+      <div class="impact-stat">
+        <div class="label">Story scroll depth</div>
+        <div class="vals"><span class="from">35%</span><span class="arrow">→</span><span class="to">74%</span></div>
+      </div>
+      <div class="impact-stat">
+        <div class="label">"Where to Buy" CTR</div>
+        <div class="vals"><span class="to" style="font-size:1.6rem">+40%</span></div>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">Task success rate — usability sessions (n=6)</div>
+      <div class="chart-sub">Baseline (audit) vs. after redesign (prototype)</div>
+      <div class="legend">
+        <span><i style="background:var(--border2)"></i>Baseline</span>
+        <span><i style="background:linear-gradient(90deg,var(--copper),var(--green))"></i>After redesign</span>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Find a bottle: "vanilla-forward, under $60"</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:58%"></div><div class="bar-fill" data-w="92"></div></div>
+        <div class="bar-vals"><span class="old">58%</span><span class="new">92%</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Understand the difference between two expressions</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:61%"></div><div class="bar-fill" data-w="95"></div></div>
+        <div class="bar-vals"><span class="old">61%</span><span class="new">95%</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Find a store nearby</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:70%"></div><div class="bar-fill" data-w="96"></div></div>
+        <div class="bar-vals"><span class="old">70%</span><span class="new">96%</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Add to favorites / share a product</div>
+        <div class="bar-track"><div class="bar-fill-base" style="width:25%"></div><div class="bar-fill" data-w="80"></div></div>
+        <div class="bar-vals"><span class="old">25%</span><span class="new">80%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECTION -->
+<section class="reflection-section reveal">
+  <div class="inner">
+    <div class="eyebrow">08 — Reflection &amp; next steps</div>
+    <h2 class="s-title">Craft and clarity don't have to compete.</h2>
+    <div class="reflection-grid">
+      <div class="reflection-text">
+        <p>This redesign balances premium brand storytelling with decision simplicity. By foregrounding a guided Finder, elevating product comparison, and clarifying buying paths, the experience becomes more educational, faster, and more conversion-friendly — without sacrificing the craft narrative that makes Jefferson's distinct.</p>
+        <p>If this were a live engagement, the next step would be validating these directions with real traffic and iterating on the parts users actually rely on most.</p>
+      </div>
+      <div class="next-list">
+        <div class="next-item"><span class="ni">01</span>A/B test Finder vs. no-Finder on the homepage hero</div>
+        <div class="next-item"><span class="ni">02</span>Measure "Where to Buy" CTR by placement (sticky vs. inline)</div>
+        <div class="next-item"><span class="ni">03</span>Validate which flavor badges reduce choice overload</div>
+        <div class="next-item"><span class="ni">04</span>Run performance budgets — LCP &lt; 2.5s, CLS &lt; 0.1</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / PDF -->
+<section class="cta-section reveal">
+  <div class="inner">
+    <div class="eyebrow">Full breakdown</div>
+    <h2 class="cta-title">Want the full research, wireframes &amp; design system?</h2>
+    <p class="cta-sub">The detailed write-up includes the complete heuristic audit, competitive analysis, IA, accessibility notes, and the full projected-impact model.</p>
+    <a href="jeffersons-bourbon-case-study.pdf" class="pdf-card" target="_blank" rel="noopener">
+      <div class="pdf-icon">PDF</div>
+      <div class="pdf-info">
+        <h4>View the detailed case study</h4>
+        <span>Full report · 9 pages</span>
+      </div>
+      <div class="pdf-arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <span>© 2026 Nadia Soren</span>
+  <span>Jefferson's Bourbon — Self-Initiated UX Case Study</span>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        if (e.target.querySelector('.bar-fill')) {
+          e.target.querySelectorAll('.bar-fill').forEach(b => {
+            requestAnimationFrame(() => { b.style.width = b.dataset.w + '%'; });
+          });
+        }
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
