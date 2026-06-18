@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Essays on AI-led UX design, design systems, research, and craft — by Shivam, senior UX designer with 12 years of experience.">
+  <title>Blog — Shivam · AI-Led UX Designer</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a href="index.html" class="logo" aria-label="Shivam — home">
+      <svg width="180" height="42" viewBox="0 0 180 42" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="180" height="42" rx="21" fill="url(#paint0_linear_blog)"/>
+        <path d="M18.0855 27.75C16.9755 27.75 16.0095 27.471 15.1875 26.913C14.3655 26.355 13.7265 25.473 13.2705 24.267L15.3855 23.43C15.7155 24.21 16.1055 24.777 16.5555 25.131C17.0055 25.485 17.5455 25.662 18.1755 25.662C18.8175 25.662 19.3395 25.5 19.7415 25.176C20.1495 24.852 20.3535 24.423 20.3535 23.889C20.3535 23.409 20.1255 23.007 19.6695 22.683C19.2195 22.353 18.4725 22.011 17.4285 21.657C16.1265 21.219 15.1875 20.703 14.6115 20.109C14.0355 19.515 13.7475 18.789 13.7475 17.931C13.7475 16.863 14.1555 15.984 14.9715 15.294C15.7935 14.598 16.8315 14.25 18.0855 14.25C19.0875 14.25 19.9455 14.475 20.6595 14.925C21.3735 15.369 21.9465 16.053 22.3785 16.977L20.3445 17.832C20.0685 17.298 19.7445 16.911 19.3725 16.671C19.0065 16.431 18.5475 16.311 17.9955 16.311C17.4915 16.311 17.0475 16.452 16.6635 16.734C16.2855 17.01 16.0965 17.37 16.0965 17.814C16.0965 18.198 16.2555 18.525 16.5735 18.795C16.8915 19.059 17.6805 19.386 18.9405 19.776C20.2545 20.178 21.2145 20.715 21.8205 21.387C22.4265 22.053 22.7295 22.863 22.7295 23.817C22.7295 25.011 22.2705 25.965 21.3525 26.679C20.4345 27.393 19.3455 27.75 18.0855 27.75Z" fill="#1E1E1E"/>
+        <path d="M48.817 27.444V14.556H51.22V27.444H48.817ZM40.78 27.444V14.556H43.174V27.444H40.78ZM42.184 21.99V19.749H49.816V21.99H42.184Z" fill="#1E1E1E"/>
+        <rect x="60" y="7" width="28" height="28" rx="14" fill="#3B2F5E"/>
+        <path d="M72.7895 27.444V14.556H75.2105V27.444H72.7895Z" fill="#FFF5E1"/>
+        <path d="M100.794 27.444L96.132 14.556H98.715L101.541 22.809L101.973 24.168H102.036L102.468 22.827L105.321 14.556H107.868L103.044 27.444H100.794Z" fill="#1E1E1E"/>
+        <path d="M116 21C116 13.268 122.268 7 130 7H144V35H130C122.268 35 116 28.732 116 21V21Z" fill="#78572B"/>
+        <path d="M123.934 27.444L128.866 14.556H131.152L136.066 27.444H133.429L130.504 19.074L130.009 17.472H129.955L129.46 19.065L126.508 27.444H123.934ZM126.22 24.591L126.895 22.737H132.79L133.492 24.591H126.22Z" fill="#FFF5E1"/>
+        <path d="M144 7H158C165.732 7 172 13.268 172 21V21C172 28.732 165.732 35 158 35H144V7Z" fill="#78572B"/>
+        <path d="M151.074 27.444V14.556H154.125L157.977 24.249H158.04L161.865 14.556H164.925V27.444H162.585V20.514L162.648 18.327H162.594L158.94 27.444H157.059L153.414 18.327H153.351L153.423 20.514V27.444H151.074Z" fill="#FFF5E1"/>
+        <defs>
+          <linearGradient id="paint0_linear_blog" x1="0" y1="21" x2="180" y2="21" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#C4A882"/>
+            <stop offset="1" stop-color="#9B8EC4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </a>
+    <nav class="nav" aria-label="Main navigation">
+      <a href="work.html">Work</a>
+      <a href="index.html#workflow">Workflow</a>
+      <a href="about.html">About</a>
+      <a href="blog.html" aria-current="page">Blog</a>
+      <a href="#" class="nav-cta" data-open-contact>Let's talk</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <main class="blog-page">
+    <section class="blog-hero section">
+      <div class="blog-hero__inner">
+        <span class="section-tag">Writing</span>
+        <h1 class="blog-hero__title">
+          Notes on design, <em>intelligence</em>, and craft
+        </h1>
+        <p class="blog-hero__lede">
+          Practical essays on AI-led workflows, design systems, and the human judgment
+          that keeps products trustworthy — drawn from twelve years in the field.
+        </p>
+        <div class="blog-hero__meta">
+          <span>Updated June 2026</span>
+          <span class="blog-hero__dot" aria-hidden="true"></span>
+          <span>4 articles</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section blog-toolbar">
+      <nav class="blog-filters" aria-label="Filter articles by topic">
+        <button type="button" class="blog-filter is-active" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="blog-filter" data-filter="workflow" aria-pressed="false">AI workflow</button>
+        <button type="button" class="blog-filter" data-filter="systems" aria-pressed="false">Design systems</button>
+        <button type="button" class="blog-filter" data-filter="research" aria-pressed="false">Research</button>
+        <button type="button" class="blog-filter" data-filter="career" aria-pressed="false">Career</button>
+      </nav>
+      <p class="blog-count" aria-live="polite">Showing 4 articles</p>
+    </section>
+
+    <section class="section blog-featured">
+      <p class="blog-featured__label">Featured essay</p>
+      <article class="blog-card blog-card--featured" data-category="workflow" data-reveal>
+        <a href="Blog/blog-ai-workflow-integrations.html" class="blog-card__link">
+          <div class="blog-card__visual blog-card__visual--gold">
+            <span class="blog-card__visual-tag">AI-Led Workflow</span>
+          </div>
+          <div class="blog-card__body">
+            <div class="blog-card__meta">
+              <time datetime="2026-06-01">June 2026</time>
+              <span>9 min read</span>
+            </div>
+            <h2>How I integrate AI into every design phase</h2>
+            <p>
+              A repeatable framework for discover, diverge, validate, and ship — where human
+              judgment stays in control and AI handles the heavy lifting.
+            </p>
+            <span class="blog-card__cta">Read essay →</span>
+          </div>
+        </a>
+      </article>
+    </section>
+
+    <section class="section blog-list">
+      <div class="blog-list__header">
+        <h2 class="blog-list__title">All articles</h2>
+      </div>
+      <div class="blog-grid">
+        <article class="blog-card" data-category="systems" data-reveal>
+          <div class="blog-card__link blog-card__link--soon">
+            <div class="blog-card__visual blog-card__visual--slate">
+              <span class="blog-card__visual-tag">Design Systems</span>
+            </div>
+            <div class="blog-card__body">
+              <div class="blog-card__meta">
+                <time datetime="2026-05-15">May 2026</time>
+                <span>Coming soon</span>
+              </div>
+              <h3>Design tokens that survive generative UI</h3>
+              <p>Why constraint beats component count when AI starts proposing interface variations at scale.</p>
+              <span class="blog-card__cta blog-card__cta--muted">Publishing soon</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-card" data-category="research" data-reveal>
+          <div class="blog-card__link blog-card__link--soon">
+            <div class="blog-card__visual blog-card__visual--teal">
+              <span class="blog-card__visual-tag">UX Research</span>
+            </div>
+            <div class="blog-card__body">
+              <div class="blog-card__meta">
+                <time datetime="2026-04-20">April 2026</time>
+                <span>Coming soon</span>
+              </div>
+              <h3>When synthetic users help — and when they mislead</h3>
+              <p>Clear boundaries for AI-moderated testing without replacing the nuance of real participant sessions.</p>
+              <span class="blog-card__cta blog-card__cta--muted">Publishing soon</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="blog-card" data-category="career" data-reveal>
+          <div class="blog-card__link blog-card__link--soon">
+            <div class="blog-card__visual blog-card__visual--amber">
+              <span class="blog-card__visual-tag">Career</span>
+            </div>
+            <div class="blog-card__body">
+              <div class="blog-card__meta">
+                <time datetime="2026-03-10">March 2026</time>
+                <span>Coming soon</span>
+              </div>
+              <h3>Twelve years of stakeholder workshops that actually decide things</h3>
+              <p>Facilitation patterns for aligning executives, engineers, and users before pixels enter the picture.</p>
+              <span class="blog-card__cta blog-card__cta--muted">Publishing soon</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact">
+      <div class="contact-inner" data-reveal>
+        <span class="section-tag">Let's connect</span>
+        <h2>Have a question or want to collaborate?</h2>
+        <p>Whether it's about AI-led design, a speaking opportunity, or just swapping notes — I'd love to hear from you.</p>
+        <button type="button" class="btn btn-primary btn-large" data-open-contact>Start a conversation</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Shivam</span>
+    <span>Designed &amp; built with an AI-assisted workflow</span>
+  </footer>
+
+  <div class="modal-overlay" id="contact-modal" aria-hidden="true" role="dialog" aria-labelledby="contact-modal-title">
+    <div class="modal">
+      <button type="button" class="modal-close" aria-label="Close modal">&times;</button>
+      <h2 id="contact-modal-title">Let's connect</h2>
+      <p class="modal-desc">Share your name, email, and what you'd like to connect about. I'll get back to you soon.</p>
+      <form id="contact-form" novalidate>
+        <div class="form-group">
+          <label for="contact-name">Name</label>
+          <input type="text" id="contact-name" name="name" required placeholder="Your name" autocomplete="name">
+          <span class="form-error" id="contact-name-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" name="email" required placeholder="you@example.com" autocomplete="email">
+          <span class="form-error" id="contact-email-error"></span>
+        </div>
+        <div class="form-group">
+          <label for="contact-topic">Topic</label>
+          <textarea id="contact-topic" name="topic" required rows="3" placeholder="What would you like to connect about?"></textarea>
+          <span class="form-error" id="contact-topic-error"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Send message</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="contact-success-modal" aria-hidden="true" role="dialog" aria-labelledby="contact-success-title">
+    <div class="modal modal--success">
+      <div class="success-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h2 id="contact-success-title">Message sent!</h2>
+      <p>Thanks for reaching out. Your message has been shared and I'll get back to you at the email you provided soon.</p>
+      <button type="button" class="btn btn-primary btn-full" data-close-contact-success>Got it</button>
+    </div>
+  </div>
+
+  <script src="JS/script.js"></script>
+  <script src="JS/blog.js"></script>
+</body>
+</html>
